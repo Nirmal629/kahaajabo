@@ -4,7 +4,7 @@
       <div class="col-lg-3 col-md-6 col-12">
         <div class="box_wrap">
           <figure class="logo_wrap">
-            <img src="{{asset('Frontend/Assets/images/logo2.png')}}" class="img-fluid" alt="logo" />
+            <img src="{{asset('public/Frontend/Assets/images/logo2.png')}}" class="img-fluid" alt="logo" />
           </figure>
           <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quidem, autem natus possimus voluptatum dolorem? Eligendi cum, distinctio commodi dolores error laborum incidunt quibusdam porro facilis repellendus repudiandae vel eum?</p>
 

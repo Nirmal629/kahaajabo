@@ -324,7 +324,7 @@
                         <p class="font-weight-bold py-3">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                         <div class="circle-img">
-                            <img src="{{asset('Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
+                            <img src="{{asset('public/Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
                             <h6 class=" font-weight-bold">Tabish Khair</h6>
                         </div>
                     </div>
@@ -341,7 +341,7 @@
                         <p class="font-weight-bold py-3">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                         <div class="circle-img">
-                            <img src="{{asset('Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
+                            <img src="{{asset('public/Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
                             <h6 class=" font-weight-bold">Tabish Khair</h6>
                         </div>
                     </div>
@@ -358,7 +358,7 @@
                         <p class="font-weight-bold py-3">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                         <div class="circle-img">
-                            <img src="{{asset('Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
+                            <img src="{{asset('public/Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
                             <h6 class=" font-weight-bold">Tabish Khair</h6>
                         </div>
                     </div>
@@ -375,7 +375,7 @@
                         <p class="font-weight-bold py-3">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                         <div class="circle-img">
-                            <img src="{{asset('Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
+                            <img src="{{asset('public/Frontend/Assets/images/image1.jpg')}}" class=" client-pic rounded-circle img-fluid">
                             <h6 class=" font-weight-bold">Tabish Khair</h6>
                         </div>
                     </div>

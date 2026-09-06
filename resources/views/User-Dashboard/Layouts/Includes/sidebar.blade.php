@@ -1,5 +1,5 @@
 <div id="sidebar" class="sidebar-section">
-        <div class="sidebar-logo"><a href="/"> <img src="{{asset('Frontend/Assets/images/logo1.png')}}" class="img-fluid" alt="logo" /></a>
+        <div class="sidebar-logo"><a href="/"> <img src="{{asset('public/Frontend/Assets/images/logo1.png')}}" class="img-fluid" alt="logo" /></a>
         </div>
         <ul class="sidebar_nav">
                 <li class="sidebar__nav-item"><a class="sidebar__nav-link" href="/">
