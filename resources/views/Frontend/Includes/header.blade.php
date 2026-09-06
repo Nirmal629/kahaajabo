@@ -2,7 +2,7 @@
         <div class="cust_container">
             <div class="content_wrap">
                 <a href="#" class="logo_wrap">
-                    <img src="{{ asset('Frontend/Assets/images/logo1.png') }}" class="img-fluid" alt="logo" />
+                    <img src="{{ asset('public/Frontend/Assets/images/logo1.png') }}" class="img-fluid" alt="logo" />
                 </a>
                 <!-- 
                 <ul class="navlist">
