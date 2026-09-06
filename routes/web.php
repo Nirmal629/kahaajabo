@@ -31,6 +31,7 @@ Route::post('/location-fetch', [HomeController::class, 'location_fetch'])->name(
 Route::post('/partner-register', [AuthController::class, 'partner_registration'])->name('partner.register');
 Route::post('/driver-register', [AuthController::class, 'driver_registration'])->name('driver.register');
 Route::post('/request-call-enquiry', [ContactEnquiryController::class, 'call_enquiry'])->name('requestCall.enquiry.store');
+Route::post('/request-contact-enquiry', [ContactEnquiryController::class, 'contact_enquiry'])->name('contact.enquiry.store');
 
 Route::post('/user-register', [UserAuthController::class, 'user_registration'])->name('user.register');
 Route::post('/user-login', [UserAuthController::class, 'user_login'])->name('user.login');

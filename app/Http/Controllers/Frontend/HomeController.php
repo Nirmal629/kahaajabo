@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\HomeBanner;
+use App\Models\HomeAllSection;
+use App\Models\PopularDestination;
+use App\Models\VehicleRate;
+use App\Models\ContactDetails;
 use App\Helpers\LocationHelper;
 use Illuminate\Http\Request;
 
@@ -15,7 +20,17 @@ class HomeController extends Controller
                         ->where('status', 1)
                         ->get();
 
-        return view('Frontend.index');
+        $get_banner = HomeBanner::where('status', 1)->get();
+        $get_home_details = HomeAllSection::first();
+        $get_popDestination = PopularDestination::where('status', 1)->get();
+
+        $vehicle_rates = VehicleRate::with('vehicleType')
+            ->where('status', 1)
+            ->get();
+
+        $contact_details = ContactDetails::first();
+
+        return view('Frontend.index', compact('get_banner', 'get_home_details', 'get_popDestination', 'vehicle_rates', 'contact_details'));
     }
 
 

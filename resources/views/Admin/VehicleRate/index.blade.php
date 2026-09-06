@@ -63,7 +63,7 @@
                             <td>{{ $vehicle_rate->vehicleType->vehicle_type ?? '-' }}
                             </td>
                             <td>{{ $vehicle_rate->vehicle_name }}</td>
-                            <td>${{ number_format($vehicle_rate->price_per_km, 2) }} / KM
+                            <td>₹{{ number_format($vehicle_rate->price_per_km, 2) }} / KM
                             </td>
                             <td>
                                 @if($vehicle_rate->vehicle_image)

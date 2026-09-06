@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\RequestCallEnquiry;
+use App\Models\ContactEnquiry;
 use Illuminate\Http\Request;
 
 class ContactEnquiryController extends Controller
@@ -61,5 +62,40 @@ class ContactEnquiryController extends Controller
                 'error'   => $th->getMessage(),
             ], 500);
         }
+    }
+
+    public function contact_enquiry(Request $request){
+        $request->validate([
+            'contact_first_name' => 'required|string|max:100',
+            'contact_last_name'  => 'required|string|max:100',
+            'contact_email'      => 'email|max:255',
+            'contact_phoneNo'    => 'required|digits:10',
+            'contact_subject'    => 'string|max:255',
+            'contact_message'    => 'required|string|max:2000',
+        ], [
+            'contact_first_name.required' => 'Please enter your first name.',
+            'contact_last_name.required'  => 'Please enter your last name.',
+            'contact_email.email'         => 'Please enter a valid email address.',
+            'contact_phoneNo.required'    => 'Please enter your phone number.',
+            'contact_phoneNo.digits'      => 'Phone number must be exactly 10 digits.',
+            'contact_message.required'    => 'Please enter your message.',
+        ]);
+
+        // Save enquiry
+        ContactEnquiry::create([
+            'first_name' => $request->contact_first_name,
+            'last_name'  => $request->contact_last_name,
+            'email'      => $request->contact_email,
+            'phone_no'   => $request->contact_phoneNo,
+            'subject'    => $request->contact_subject,
+            'message'    => $request->contact_message,
+        ]);
+
+        // Redirect with success message
+        return back()->with(
+            'success',
+            'Your enquiry has been submitted successfully.'
+        );
+    
     }
 }

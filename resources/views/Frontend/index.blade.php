@@ -6,51 +6,20 @@
 <section class="banner">
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="image-box">
-                    <figure class="image_wrap">
-                        <img src="{{asset('Frontend/Assets/images/banner.png')}}" class="img-fluid h-100" alt="banner" />
-                    </figure>
-                    <div class="banner-content">
-                        <h1>Siddharth Nagar & Lucknow's Most Reliable Cab Network</h1>
-                        <h4>Fixed fares. Background-verified drivers. No surprise cancellations</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since 1966, when designers at Letraset and
-                            James Mosley, the librarian at St Bride Printing Library, took a 1914 Cicero translation and
-                            scrambled it to make dummy text for Letraset's Body Type sheets</p>
+            @foreach ($get_banner as $get_bannerVal)
+                <div class="swiper-slide">
+                    <div class="image-box">
+                        <figure class="image_wrap">
+                            <img src="{{asset('uploads/home-dynamic/'.$get_bannerVal->banner_image)}}" class="img-fluid h-100 w-100" alt="banner" />
+                        </figure>
+                        <div class="banner-content">
+                            <h1>{{ $get_bannerVal->banner_title }}</h1>
+                            <h4>{{ $get_bannerVal->banner_sub_title }}</h4>
+                            <p>{{ $get_bannerVal->banner_description }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image-box">
-                    <figure class="image_wrap">
-                        <img src="{{asset('Frontend/Assets/images/banner.png')}}" class="img-fluid h-100" alt="banner" />
-                    </figure>
-                    <div class="banner-content">
-                        <h1>Siddharth Nagar & Lucknow's Most Reliable Cab Network</h1>
-                        <h4>Fixed fares. Background-verified drivers. No surprise cancellations</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since 1966, when designers at Letraset and
-                            James Mosley, the librarian at St Bride Printing Library, took a 1914 Cicero translation and
-                            scrambled it to make dummy text for Letraset's Body Type sheets.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image-box">
-                    <figure class="image_wrap">
-                        <img src="{{asset('Frontend/Assets/images/banner.png')}}" class="img-fluid h-100" alt="banner" />
-                    </figure>
-                    <div class="banner-content">
-                        <h1>Siddharth Nagar & Lucknow's Most Reliable Cab Network</h1>
-                        <h4>Fixed fares. Background-verified drivers. No surprise cancellations</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since 1966, when designers at Letraset and
-                            James Mosley, the librarian at St Bride Printing Library, took a 1914 Cicero translation and
-                            scrambled it to make dummy text for Letraset's Body Type sheets</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
@@ -241,46 +210,25 @@
 <section class="car-hire">
     <div class="cust_container">
         <div class="section-top">
-            <h2>Our Taxi For Hire</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since 1966,
-                when designers at Letraset and James Mosley, the librarian at St Bride Printing Library,
-                took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's
-                Body Type sheets</p>
+            <h2>{{ $get_home_details->sectionSecond_title }}</h2>
+            <p>{{ $get_home_details->sectionSection_description }}</p>
         </div>
         <div class="row">
-            <div class="col-md-3 col-12">
-                <div class="box text-center">
-                    <img src="{{asset('Frontend/Assets/images/car.png')}}" alt="" class="img-fluid mb-3" />
-                    <h5 class="mb-2">Dzire or Similar</h5>
-                    <h6 class="mb-3">$12.00 / KM</h6>
-                    <button class="Primary-btn">Book Now</button>
+            @foreach ($vehicle_rates as $vehicle_ratesVal)
+                <div class="col-md-3 col-12">
+                    <div class="box text-center">
+                        <img src="{{asset('uploads/vehicle-rate/'.$vehicle_ratesVal->vehicle_image)}}" alt="" class="img-fluid mb-3" />
+                        <h5 class="mb-2">
+                            {{ $vehicle_ratesVal->vehicleType?->vehicle_type }}
+                                / {{ $vehicle_ratesVal->vehicle_name }}
+                        </h5>
+                        <h6 class="mb-3">
+                            ₹{{ number_format($vehicle_ratesVal->price_per_km, 2) }} / KM
+                        </h6>
+                        <button class="Primary-btn">Book Now</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="box text-center">
-                    <img src="{{asset('Frontend/Assets/images/car.png')}}" alt="" class="img-fluid mb-3" />
-                    <h5 class="mb-2">Dzire or Similar</h5>
-                    <h6 class="mb-3">$12.00 / KM</h6>
-                    <button class="Primary-btn">Book Now</button>
-                </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="box text-center">
-                    <img src="{{asset('Frontend/Assets/images/car.png')}}" alt="" class="img-fluid mb-3" />
-                    <h5 class="mb-2">Dzire or Similar</h5>
-                    <h6 class="mb-3">$12.00 / KM</h6>
-                    <button class="Primary-btn">Book Now</button>
-                </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="box text-center">
-                    <img src="{{asset('Frontend/Assets/images/car.png')}}" alt="" class="img-fluid mb-3" />
-                    <h5 class="mb-2">Dzire or Similar</h5>
-                    <h6 class="mb-3">$12.00 / KM</h6>
-                    <button class="Primary-btn">Book Now</button>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -290,46 +238,19 @@
 <section class="popular-destination">
     <div class="cust_container">
         <div class="mb-5">
-            <h3 class="sec-heading text-center mb-4">Popular Destination</h3>
+            <h3 class="sec-heading text-center mb-4">{{ $get_home_details->third_section_title }}</h3>
 
         </div>
         <div class="swiper popularSwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="{{asset('Frontend/Assets/images/abe.png')}}" alt="" class="img-fluid w-100" />
-                    <h6 class="mb-3">Mathura Taxi Service</h6>
-                    <button class="Primary-btn m-auto d-table">Book Now</button>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{asset('Frontend/Assets/images/abc.png')}}" alt="" class="img-fluid w-100" />
-                    <h6 class="mb-3">Mathura Taxi Service</h6>
-                    <button class="Primary-btn m-auto d-table">Book Now</button>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{asset('Frontend/Assets/images/abd.png')}}" alt="" class="img-fluid w-100" />
-                    <h6 class="mb-3">Mathura Taxi Service</h6>
-                    <button class="Primary-btn m-auto d-table">Book Now</button>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{asset('Frontend/Assets/images/abb.png')}}" alt="" class="img-fluid w-100" />
-                    <h6 class="mb-3">Mathura Taxi Service</h6>
-                    <button class="Primary-btn m-auto d-table">Book Now</button>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{asset('Frontend/Assets/images/abe.png')}}" alt="" class="img-fluid w-100" />
-                    <h6 class="mb-3">Mathura Taxi Service</h6>
-                    <button class="Primary-btn m-auto d-table">Book Now</button>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{asset('Frontend/Assets/images/abe.png')}}" alt="" class="img-fluid w-100" />
-                    <h6 class="mb-3">Mathura Taxi Service</h6>
-                    <button class="Primary-btn m-auto d-table">Book Now</button>
-                </div>
+                @foreach ($get_popDestination as $get_popDestinationVal)
+                    <div class="swiper-slide">
+                        <img src="{{asset('uploads/home-dynamic/'.$get_popDestinationVal->image)}}" alt="" class="img-fluid w-100" />
+                        <h6 class="mb-3">{{ $get_popDestinationVal->destination_name }}</h6>
+                        <button class="Primary-btn m-auto d-table">Book Now</button>
+                    </div>
+                @endforeach
             </div>
-            <!-- <div class="swiper-pagination">
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div> -->
         </div>
     </div>
 </section>
@@ -340,41 +261,39 @@
 <section class="How_it_works">
     <div class="cust_container">
         <div class="mb-5">
-            <h3 class="sec-heading text-center">How It Works?</h3>
+            <h3 class="sec-heading text-center">{{ $get_home_details->fourth_section_heading }}</h3>
         </div>
         <div class="row pt-5">
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('Frontend/Assets/images/bus.png')}}" alt="" class="img-fluis" /></div>
-                    <h5>Log Your Trip</h5>
+                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_1)}}" alt="" class="img-fluis" /></div>
+                    <h5>{{ $get_home_details->fourth_section_title_1 }}</h5>
                     <span class="h_line"></span>
-                    <p> Fill out the quick form above.</p>
+                    <p>{{ $get_home_details->fourth_section_description_1 }}</p>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('Frontend/Assets/images/phone-call.png')}}" alt="" class="img-fluis" /></div>
-                    <h5>Get a Call</h5>
+                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_2)}}" alt="" class="img-fluis" /></div>
+                    <h5>{{ $get_home_details->fourth_section_title_2 }}</h5>
                     <span class="h_line"></span>
-                    <p> A local area manager calls you within minutes to confirm vehicle availability and final pricing.
-                    </p>
+                    <p>{{ $get_home_details->fourth_section_description_2 }}</p>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('Frontend/Assets/images/security-services.png')}}" alt="" class="img-fluis" /></div>
-                    <h5>Secure with UPI</h5>
+                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_3)}}" alt="" class="img-fluis" /></div>
+                    <h5>{{ $get_home_details->fourth_section_title_3 }}</h5>
                     <span class="h_line"></span>
-                    <p>Receive a WhatsApp link to pay your booking deposit 1 hour before pickup.</p>
+                    <p>{{ $get_home_details->fourth_section_description_3 }}</p>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('Frontend/Assets/images/sofa-bed.png')}}" alt="" class="img-fluis" /></div>
-                    <h5>Ride in Comfort</h5>
+                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_4)}}" alt="" class="img-fluis" /></div>
+                    <h5>{{ $get_home_details->fourth_section_title_4 }}</h5>
                     <span class="h_line"></span>
-                    <p> Your driver arrives exactly on time. Track your trip history directly in your user portal.
-                    </p>
+                    <p>{{ $get_home_details->fourth_section_description_4 }}</p>
                 </div>
             </div>
         </div>
@@ -475,36 +394,62 @@
                 <h3>CONTACT US</h3>
                 <ul class="menu">
                     <li>
-                        <i class="fa fa-rocket" aria-hidden="true"></i>4096 N Highland St, Arlington VA 32101, USA
+                        <i class="fa fa-rocket" aria-hidden="true"></i>{{ $contact_details->address }}
                     </li>
                     <li>
-                        <i class="fa fa-phone" aria-hidden="true"></i>9876543xxx
+                        <i class="fa fa-phone" aria-hidden="true"></i>{{ $contact_details->phone_number }}
                     </li>
                     <li>
-                        <i class="fa fa-envelope" aria-hidden="true"></i>demo@company.com
+                        <i class="fa fa-envelope" aria-hidden="true"></i>{{ $contact_details->email_id }}
                     </li>
                     <li>
-                        <i class="fa-solid fa-clock"></i>Mon - Fri: 08.00
-                        - 16.00
+                        <i class="fa-solid fa-clock"></i>{{ $contact_details->open_time }}
                     </li>
                 </ul>
             </div>
             <div class="col-md-6">
-                <form>
+                <form method="POST" action="{{ route('contact.enquiry.store') }}">
+                    @csrf
                     <div class="row form-group">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Name" />
+                            <input type="text" class="form-control" name="contact_first_name" value="{{ old('contact_first_name') }}" placeholder="First Name" />
+                            @error('contact_first_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                         <div class="col">
+                            <input type="text" class="form-control" name="contact_last_name" value="{{ old('contact_last_name') }}" placeholder="Last Name" />
+                            @error('contact_last_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col">
+                            <input type="email" class="form-control" name="contact_email" value="{{ old('contact_email') }}" placeholder="Email" />
+                            @error('contact_email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Email" />
+                            <input type="text" class="form-control" name="contact_phoneNo" value="{{ old('contact_phoneNo') }}" placeholder="Phone No" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                            @error('contact_phoneNo')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="subject" />
+                        <input type="text" class="form-control" name="contact_subject" value="{{ old('contact_subject') }}" id="inputAddress2" placeholder="subject" />
+                        @error('contact_subject')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Your Message"
-                            rows="6" cols="6"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="contact_message" placeholder="Your Message"
+                            rows="6" cols="6">{{ old('contact_message') }}</textarea>
+                        @error('contact_message')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror    
                     </div>
                     <div class="col">
                         <button type="submit" class="Primary-btn">send message</button>
