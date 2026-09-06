@@ -421,7 +421,7 @@
                     <ul class="list-group list-group-flush review-list">
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-1.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-1.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">iPhone X <small class="ms-4">08.34 AM</small></h6>
@@ -438,7 +438,7 @@
                         </li>
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-2.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-2.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">Air Pod <small class="ml-4">05.26 PM</small></h6>
@@ -455,7 +455,7 @@
                         </li>
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-3.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-3.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">Mackbook Pro <small class="ml-4">06.45 AM</small></h6>
@@ -472,7 +472,7 @@
                         </li>
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-4.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-4.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">Air Pod <small class="ml-4">08.34 AM</small></h6>
@@ -489,7 +489,7 @@
                         </li>
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-9.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-9.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">Air Pod <small class="ml-4">05.26 PM</small></h6>
@@ -506,7 +506,7 @@
                         </li>
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-7.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-7.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">Mackbook <small class="ml-4">08.34 AM</small></h6>
@@ -523,7 +523,7 @@
                         </li>
                         <li class="list-group-item bg-transparent">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('public/assets/images/avatars/avatar-8.png')}}" alt="user avatar" class="rounded-circle"
+                                <img src="{{ asset('assets/images/avatars/avatar-8.png')}}" alt="user avatar" class="rounded-circle"
                                     width="55" height="55">
                                 <div class="ms-3">
                                     <h6 class="mb-0">Air Pod <small class="ml-4">05.26 PM</small></h6>
