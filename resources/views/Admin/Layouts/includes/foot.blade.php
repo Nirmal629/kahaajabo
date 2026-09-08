@@ -1,19 +1,19 @@
 	<!-- Bootstrap JS -->
-	<script src="{{ asset('public/assets/js/bootstrap.bundle.min.js')}}"></script>
+	<script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}"></script>
 	<!--plugins-->
-	<script src="{{ asset('public/assets/js/jquery.min.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/simplebar/js/simplebar.min.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/metismenu/js/metisMenu.min.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js')}}"></script>
-    <script src="{{ asset('public/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/chartjs/js/chart.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/sparkline-charts/jquery.sparkline.min.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/jquery-knob/excanvas.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/jquery-knob/jquery.knob.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
-	<script src="{{ asset('public/assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
+	<script src="{{ asset('assets/js/jquery.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js')}}"></script>
+	<script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+	<script src="{{ asset('assets/plugins/chartjs/js/chart.js')}}"></script>
+	<script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/jquery-knob/excanvas.js')}}"></script>
+	<script src="{{ asset('assets/plugins/jquery-knob/jquery.knob.js')}}"></script>
+	<script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -26,9 +26,9 @@
 			  $(".knob").knob();
 		  });
 	</script>
-	<script src="{{ asset('public/assets/js/index.js')}}"></script>
+	<script src="{{ asset('assets/js/index.js')}}"></script>
 	<!--app JS-->
-	<script src="{{ asset('public/assets/js/app.js')}}"></script>
+	<script src="{{ asset('assets/js/app.js')}}"></script>
     
 	<script>
 		new PerfectScrollbar(".app-container")

@@ -46,7 +46,7 @@
 								<td>
 									<img 
 										src="{{ isset($bannerDetails_val) && $bannerDetails_val->banner_image
-											? asset('uploads/home-dynamic/' . $bannerDetails_val->banner_image)
+											? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $bannerDetails_val->banner_image)
 											: '' }}"
 										width="120"
 										height="80"
@@ -237,7 +237,7 @@
 								<td>
 									<img 
 										src="{{ isset($destination_val) && $destination_val->image
-											? asset('uploads/home-dynamic/' . $destination_val->image)
+											? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $destination_val->image)
 											: '' }}"
 										width="120"
 										height="80"
@@ -389,7 +389,7 @@
 						<div class="col-md-2">
 							<img id="banner_preview_1"
 								src="{{ isset($home_dynmaic_data) && $home_dynmaic_data->fourth_section_image_1
-									? asset('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_1)
+									? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_1)
 									: '' }}"
 								width="120"
 								height="100"
@@ -457,7 +457,7 @@
 						<div class="col-md-2">
 							<img id="banner_preview_2"
 								src="{{ isset($home_dynmaic_data) && $home_dynmaic_data->fourth_section_image_2
-									? asset('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_2)
+									? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_2)
 									: '' }}"
 								width="120"
 								height="100"
@@ -525,7 +525,7 @@
 						<div class="col-md-2">
 							<img id="banner_preview_3"
 								src="{{ isset($home_dynmaic_data) && $home_dynmaic_data->fourth_section_image_3
-									? asset('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_3)
+									? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_3)
 									: '' }}"
 								width="120"
 								height="100"
@@ -593,7 +593,7 @@
 						<div class="col-md-2">
 							<img id="banner_preview_4"
 								src="{{ isset($home_dynmaic_data) && $home_dynmaic_data->fourth_section_image_4
-									? asset('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_4)
+									? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $home_dynmaic_data->fourth_section_image_4)
 									: '' }}"
 								width="120"
 								height="100"

@@ -133,7 +133,7 @@
                                 <div class="col-md-2 mb-3">
                                     <img id="vehicle_preview"
                                         src="{{ isset($vehicle_rate) && $vehicle_rate->vehicle_image
-                                            ? asset('uploads/vehicle-rate/' . $vehicle_rate->vehicle_image)
+                                            ? \App\Helpers\LocationHelper::imageUrl('uploads/vehicle-rate/' . $vehicle_rate->vehicle_image)
                                             : '' }}"
                                         width="150"
                                         height="100"

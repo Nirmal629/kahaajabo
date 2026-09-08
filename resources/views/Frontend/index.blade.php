@@ -10,7 +10,7 @@
                 <div class="swiper-slide">
                     <div class="image-box">
                         <figure class="image_wrap">
-                            <img src="{{asset('uploads/home-dynamic/'.$get_bannerVal->banner_image)}}" class="img-fluid h-100 w-100" alt="banner" />
+                            <img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/'.$get_bannerVal->banner_image)}}" class="img-fluid h-100 w-100" alt="banner" />
                         </figure>
                         <div class="banner-content">
                             <h1>{{ $get_bannerVal->banner_title }}</h1>
@@ -217,7 +217,7 @@
             @foreach ($vehicle_rates as $vehicle_ratesVal)
                 <div class="col-md-3 col-12">
                     <div class="box text-center">
-                        <img src="{{asset('uploads/vehicle-rate/'.$vehicle_ratesVal->vehicle_image)}}" alt="" class="img-fluid mb-3" />
+                        <img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/vehicle-rate/'.$vehicle_ratesVal->vehicle_image)}}" alt="" class="img-fluid mb-3" />
                         <h5 class="mb-2">
                             {{ $vehicle_ratesVal->vehicleType?->vehicle_type }}
                                 / {{ $vehicle_ratesVal->vehicle_name }}
@@ -245,7 +245,7 @@
             <div class="swiper-wrapper">
                 @foreach ($get_popDestination as $get_popDestinationVal)
                     <div class="swiper-slide">
-                        <img src="{{asset('uploads/home-dynamic/'.$get_popDestinationVal->image)}}" alt="" class="img-fluid w-100" />
+                        <img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/'.$get_popDestinationVal->image)}}" alt="" class="img-fluid w-100" />
                         <h6 class="mb-3">{{ $get_popDestinationVal->destination_name }}</h6>
                         <button class="Primary-btn m-auto d-table">Book Now</button>
                     </div>
@@ -266,7 +266,7 @@
         <div class="row pt-5">
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_1)}}" alt="" class="img-fluis" /></div>
+                    <div class="icon"><img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/'.$get_home_details->fourth_section_image_1)}}" alt="" class="img-fluis" /></div>
                     <h5>{{ $get_home_details->fourth_section_title_1 }}</h5>
                     <span class="h_line"></span>
                     <p>{{ $get_home_details->fourth_section_description_1 }}</p>
@@ -274,7 +274,7 @@
             </div>
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_2)}}" alt="" class="img-fluis" /></div>
+                    <div class="icon"><img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/'.$get_home_details->fourth_section_image_2)}}" alt="" class="img-fluis" /></div>
                     <h5>{{ $get_home_details->fourth_section_title_2 }}</h5>
                     <span class="h_line"></span>
                     <p>{{ $get_home_details->fourth_section_description_2 }}</p>
@@ -282,7 +282,7 @@
             </div>
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_3)}}" alt="" class="img-fluis" /></div>
+                    <div class="icon"><img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/'.$get_home_details->fourth_section_image_3)}}" alt="" class="img-fluis" /></div>
                     <h5>{{ $get_home_details->fourth_section_title_3 }}</h5>
                     <span class="h_line"></span>
                     <p>{{ $get_home_details->fourth_section_description_3 }}</p>
@@ -290,7 +290,7 @@
             </div>
             <div class="col-md-3 col-12">
                 <div class="box">
-                    <div class="icon"><img src="{{asset('uploads/home-dynamic/'.$get_home_details->fourth_section_image_4)}}" alt="" class="img-fluis" /></div>
+                    <div class="icon"><img src="{{\App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/'.$get_home_details->fourth_section_image_4)}}" alt="" class="img-fluis" /></div>
                     <h5>{{ $get_home_details->fourth_section_title_4 }}</h5>
                     <span class="h_line"></span>
                     <p>{{ $get_home_details->fourth_section_description_4 }}</p>

@@ -68,7 +68,7 @@
                             <td>
                                 @if($vehicle_rate->vehicle_image)
                                     <img
-                                        src="{{ asset('uploads/vehicle-rate/' . $vehicle_rate->vehicle_image) }}"
+                                        src="{{ \App\Helpers\LocationHelper::imageUrl('uploads/vehicle-rate/' . $vehicle_rate->vehicle_image) }}"
                                         width="100"
                                         height="60"
                                         style="object-fit: cover; border-radius: 5px;"

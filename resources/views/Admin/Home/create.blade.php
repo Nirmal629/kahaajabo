@@ -130,7 +130,7 @@
 
                                 <img id="banner_preview"
                                     src="{{ isset($banner_data) && $banner_data->banner_image
-                                        ? asset('uploads/home-dynamic/' . $banner_data->banner_image)
+                                        ? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $banner_data->banner_image)
                                         : '' }}"
                                     width="150"
                                     height="100"

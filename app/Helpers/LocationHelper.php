@@ -40,4 +40,26 @@ class LocationHelper
 
         return $query->get();
     }
+
+
+    /**
+     * Generate image URL for local and cPanel
+     */
+    public static function imageUrl($path)
+    {
+        if (empty($path)) {
+            return '';
+        }
+
+        $path = ltrim($path, '/');
+
+        // cPanel / Production
+        if (app()->environment('production')) {
+            return asset('public/' . $path);
+        }
+
+        // Local
+        return asset($path);
+    }
+    
 }

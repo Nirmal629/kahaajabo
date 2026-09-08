@@ -92,7 +92,7 @@
 
                                 <img id="banner_preview"
                                     src="{{ isset($destination_data) && $destination_data->image
-                                        ? asset('uploads/home-dynamic/' . $destination_data->image)
+                                        ? \App\Helpers\LocationHelper::imageUrl('uploads/home-dynamic/' . $destination_data->image)
                                         : '' }}"
                                     width="150"
                                     height="100"
