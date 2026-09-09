@@ -30,3 +30,5 @@ Thumbs.db
 /resources/views/Frontend/Includes/head.blade.php
 /resources/views/Frontend/Includes/foot.blade.php
 /resources/views/User-Dashboard/Layouts/App.blade.php
+index.php
+.htaccess
