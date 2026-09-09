@@ -12,16 +12,36 @@
                     <li class="navlink"><a href="#">Contact us</a></li>
                 </ul> -->
                 <div class=" align-items-center right-part">
-                    <button type="button" class="Primary-btn" data-toggle="modal" data-target="#myModal">Register as a
+                    {{-- <button type="button" class="Primary-btn" data-toggle="modal" data-target="#myModal">Register as a
                         Partner</button>
                     
                     <button class="Primary-btn" data-toggle="modal" data-target="#carModal">Register your Car</button>
                     
                     <button class="Primary-btn" data-toggle="modal" data-target="#driverModal">Register as a
-                        Driver</button>
+                        Driver</button> --}}
                     
+                   
+                    <div class="dropdown">
+                        <button class="Primary-btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Register as a Partner
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Register as a
+                                Manager</a>
+
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#carModal">Register Your
+                                car</a>
+
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#driverModal">Register as
+                                a Driver</a>
+
+                        </div>
+                    </div>
+
                     <button class="Primary-btn" data-toggle="modal" data-target="#bookingModal"><i
                             class="fa-solid fa-phone mr-2"></i>Request a Call</button>
+
 
                     @if(Auth::check())
 
