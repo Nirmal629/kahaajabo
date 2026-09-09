@@ -7,7 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
 <!-- main JS file----->
-<script src="{{asset('Frontend/Assets/js/main.js')}}"></script>
+<script src="{{asset('public/Frontend/Assets/js/main.js')}}"></script>
 
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
 
