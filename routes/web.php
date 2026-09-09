@@ -36,6 +36,8 @@ Route::post('/request-contact-enquiry', [ContactEnquiryController::class, 'conta
 Route::post('/user-register', [UserAuthController::class, 'user_registration'])->name('user.register');
 Route::post('/user-login', [UserAuthController::class, 'user_login'])->name('user.login');
  
+Route::view('/manager-dashboard', 'Manager-Dashboard.dashboard')->name('manager.dashboard');
+Route::view('/manager/car-list', 'Manager-Dashboard.car-list')->name('manager.car-list');
 
 
 Route::middleware('auth')->prefix('user')->name('user.')->group(function () {

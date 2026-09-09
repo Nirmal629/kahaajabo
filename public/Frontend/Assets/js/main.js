@@ -121,3 +121,8 @@ var swiper = new Swiper(".popularSwiper", {
         },
     },
 });
+
+
+
+//data-table
+new DataTable('#example');
