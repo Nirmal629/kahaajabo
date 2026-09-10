@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 
     <!-- Core Style Css -->
-    <link rel="stylesheet" href="{{asset('public/Frontend/Assets/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('Frontend/Assets/css/style.css')}}" />
      <link rel="stylesheet" href="https://cdn.datatables.net/3.0.2/css/dataTables.bootstrap4.min.css" />
 </head>
 
@@ -63,7 +63,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
     <!-- main JS file----->
-    <script src="{{asset('public/Frontend/Assets/js/main.js')}}"></script>
+    <script src="{{asset('Frontend/Assets/js/main.js')}}"></script>
 
     <script src="'https://cdn.datatables.net/3.0.2/js/dataTables.min.js"></script>
     <script src="'https://cdn.datatables.net/3.0.2/js/dataTables.bootstrap4.min.js"></script>
