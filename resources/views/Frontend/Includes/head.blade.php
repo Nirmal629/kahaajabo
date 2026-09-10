@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 
     <!-- Core Style Css -->
-    <link rel="stylesheet" href="{{asset('Frontend/Assets/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('public/Frontend/Assets/css/style.css')}}" />
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
