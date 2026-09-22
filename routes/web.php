@@ -29,6 +29,9 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::post('/location-fetch', [HomeController::class, 'location_fetch'])->name('location.fetch');
 Route::post('/partner-register', [AuthController::class, 'partner_registration'])->name('partner.register');
+Route::post('/verify-otp',[AuthController::class, 'verify_otp'])->name('verify.otp');
+Route::post('/resend-otp',[AuthController::class, 'resend_otp'])->name('resend.otp');
+
 Route::post('/driver-register', [AuthController::class, 'driver_registration'])->name('driver.register');
 Route::post('/request-call-enquiry', [ContactEnquiryController::class, 'call_enquiry'])->name('requestCall.enquiry.store');
 Route::post('/request-contact-enquiry', [ContactEnquiryController::class, 'contact_enquiry'])->name('contact.enquiry.store');

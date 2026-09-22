@@ -4,13 +4,7 @@
                 <a href="#" class="logo_wrap">
                     <img src="{{ asset('public/Frontend/Assets/images/logo1.png') }}" class="img-fluid" alt="logo" />
                 </a>
-                <!-- 
-                <ul class="navlist">
-                    <li class="navlink"><a href="#">Home</a></li>
-                    <li class="navlink"><a href="#">About</a></li>
-                    <li class="navlink"><a href="#">Blog</a></li>
-                    <li class="navlink"><a href="#">Contact us</a></li>
-                </ul> -->
+               
                 <div class=" align-items-center right-part">
                     {{-- <button type="button" class="Primary-btn" data-toggle="modal" data-target="#myModal">Register as a
                         Partner</button>
@@ -87,7 +81,7 @@
                         class="fa-solid fa-x"></i></button>
             </div>
             <div class="modal-body">
-                <form method="POST"
+                <form method="POST" id="partnerRegistrationForm"
                     action="{{ route('partner.register') }}"
                     enctype="multipart/form-data">
 
@@ -154,100 +148,8 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <!-- Country -->
-                    <div class="form-group">
-                        <label>Country</label>
-
-                        <select id="partner_country_id"
-                                name="partner_country_id"
-                                class="form-control location-country">
-
-                            <option value="">Choose Country</option>
-
-                            @foreach($countries as $country)
-                                <option value="{{ $country->id }}"
-                                    {{ old('partner_country_id') == $country->id ? 'selected' : '' }}>
-                                    {{ $country->country_name }}
-                                </option>
-                            @endforeach
-
-                        </select>
-
-                        @error('partner_country_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!-- State -->
-                    <div class="form-group">
-                        <label>State</label>
-
-                        <select id="partner_state_id"
-                                name="partner_state_id"
-                                class="form-control location-state"
-                                disabled>
-
-                            <option value="">Choose State</option>
-
-                        </select>
-
-                        @error('partner_state_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!-- District -->
-                    <div class="form-group">
-                        <label>District</label>
-
-                        <select id="partner_district_id"
-                                name="partner_district_id"
-                                class="form-control location-district"
-                                disabled>
-
-                            <option value="">Choose District</option>
-
-                        </select>
-
-                        @error('partner_district_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!-- City -->
-                    <div class="form-group">
-                        <label>City Of Operation</label>
-
-                        <select id="partner_city_id"
-                                name="partner_city_id"
-                                class="form-control location-city"
-                                disabled>
-
-                            <option value="">Choose City</option>
-
-                        </select>
-
-                        @error('partner_city_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label>Area</label>
-
-                        <select id="partner_area_id"
-                                name="partner_area_id"
-                                class="form-control location-area"
-                                disabled>
-
-                            <option value="">Choose Area..</option>
-
-                        </select>
-
-                        @error('partner_area_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
                     <!-- Password -->
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Password <span class="text-danger">*</span></label>
 
                         <input type="password"
@@ -260,10 +162,10 @@
                         @error('password')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <!-- Confirm Password -->
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Confirm Password <span class="text-danger">*</span></label>
 
                         <input type="password"
@@ -276,11 +178,11 @@
                         @error('password_confirmation')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
 
-                    <button type="submit"
+                    <button type="submit" id="registerBtn"
                             class="Primary-btn m-auto d-table">
-                        Submit
+                        SignUp
                     </button>
 
                 </form>
@@ -711,33 +613,67 @@
 </div>
 
 <!--Register_Login Modal -->
-<div class="modal fade" id="registerModal" role="dialog">
-    <div class="modal-dialog">
+<div class="modal fade"
+     id="registerModal"
+     role="dialog"
+     tabindex="-1"
+     aria-labelledby="registerModalLabel"
+     aria-hidden="true">
 
-        <!-- Modal content-->
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <ul class="nav nav-pills mb-3"
+                    id="pills-tab"
+                    role="tablist">
 
+                    <!-- SIGN UP -->
 
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-home-tab" data-toggle="pill"
-                            href="#pills-home" role="tab" aria-controls="pills-home"
-                            aria-selected="true">
-                            <h4 class="modal-title">SIGN UP</h4>
+
+                        <a class="nav-link"
+                           id="pills-home-tab"
+                           data-toggle="pill"
+                           href="#pills-home"
+                           role="tab"
+                           aria-controls="pills-home"
+                           aria-selected="false">
+
+                            <h4 class="modal-title">
+                                SIGN UP
+                            </h4>
+
                         </a>
+
                     </li>
+
+
+                    <!-- LOGIN -->
+
                     <li class="nav-item">
-                        <a class="nav-link active" id="pills-profile-tab" data-toggle="pill"
-                            href="#pills-profile" role="tab" aria-controls="pills-profile"
-                            aria-selected="false">
-                            <h4 class="modal-title">LOGIN</h4>
+
+                        <a class="nav-link active"
+                           id="pills-profile-tab"
+                           data-toggle="pill"
+                           href="#pills-profile"
+                           role="tab"
+                           aria-controls="pills-profile"
+                           aria-selected="true">
+
+                            <h4 class="modal-title">
+                                LOGIN
+                            </h4>
+
                         </a>
+
                     </li>
 
                 </ul>
-                <button type="button" class="close" data-dismiss="modal"><i
-                        class="fa-solid fa-x"></i></button>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal">
+                    <i class="fa-solid fa-x"></i>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="tab-content" id="pills-tabContent">
@@ -944,6 +880,174 @@
 
         </div>
 
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- OTP VERIFICATION MODAL -->
+<!-- ========================================================= -->
+
+<div class="modal fade"
+     id="otpModal"
+     tabindex="-1"
+     aria-labelledby="otpModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content otp-modal-content">
+
+            <div class="modal-body">
+
+                <div class="otp-container">
+
+                    <h2 class="otp-title">
+                        OTP Verification
+                    </h2>
+
+
+                    <!-- Email Message -->
+                    <div class="otp-message">
+
+                        We've sent a verification code to your
+                        email -
+
+                        <strong id="otpEmail"></strong>
+
+                    </div>
+
+
+                    <!-- OTP Form -->
+                    <form id="otpVerificationForm">
+
+                        @csrf
+
+                        <!-- Hidden Email -->
+                        <input type="hidden"
+                               name="email"
+                               id="otp_email">
+
+
+                        <!-- OTP -->
+                        <div class="mb-3">
+
+                            <input type="text"
+                                   name="otp"
+                                   id="otp"
+                                   class="form-control otp-input"
+                                   placeholder="Enter verification code"
+                                   maxlength="6"
+                                   inputmode="numeric"
+                                   autocomplete="one-time-code">
+
+                        </div>
+
+
+                        <!-- OTP Error -->
+                        <div id="otpError"
+                             class="text-danger mb-3"
+                             style="display:none;">
+                        </div>
+
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                id="verifyOtpBtn"
+                                class="btn otp-submit-btn">
+
+                            Submit
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- Timer -->
+                    <div class="text-center mt-3">
+
+                        <span id="otpTimer">
+
+                            Resend OTP in
+                            <strong>60</strong>s
+
+                        </span>
+
+
+                        <button type="button"
+                                id="resendOtpBtn"
+                                class="btn btn-link"
+                                style="display:none;">
+
+                            Resend OTP
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Registration Successful Modal -->
+<div class="modal fade"
+     id="registrationSuccessModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="registrationSuccessModalLabel"
+     aria-hidden="true"
+     data-backdrop="static"
+     data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered"
+         role="document">
+
+        <div class="modal-content"
+             style="
+                border-radius: 10px;
+                border: none;
+                padding: 30px;
+                text-align: center;
+             ">
+            <div class="modal-body">
+                <!-- Success Icon -->
+                <div class="success-icon">
+                    ✓
+                </div>
+                <!-- Title -->
+                <h3 id="registrationSuccessModalLabel"
+                    class="mb-3">
+                    Registration Successful!
+                </h3>
+                <!-- Message -->
+                <p class="text-muted mb-3">
+                    You have successfully completed your
+                    registration.
+                </p>
+
+                <p class="mb-4">
+                    Your login password has been sent to your
+                    registered email address.
+                    <br>
+                    Please check your email to continue.
+                </p>
+                <!-- Dashboard Button -->
+                <button type="button"
+                        id="successDashboardBtn"
+                        class="btn btn-primary"
+                        style="
+                            min-width: 180px;
+                            padding: 12px 25px;
+                        ">
+                    Go to Dashboard
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1444,36 +1548,14 @@ jQuery(document).ready(function ($) {
 <script>
 $(document).ready(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | SUCCESS TOAST
-    |--------------------------------------------------------------------------
-    */
-
     @if(session('success'))
         toastr.success(@json(session('success')));
     @endif
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | NORMAL ERROR TOAST
-    |--------------------------------------------------------------------------
-    */
 
     @if(session('error'))
         toastr.error(@json(session('error')));
     @endif
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | VALIDATION ERROR
-    |--------------------------------------------------------------------------
-    | Validation errors will NOT show in toastr.
-    | The appropriate modal will open instead.
-    |--------------------------------------------------------------------------
-    */
 
     @if($errors->any() && session('open_modal'))
 
@@ -1541,25 +1623,350 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function () {
-
     @if(session('open_modal') === 'registerModal')
-
         // Open modal
         $('#registerModal').modal('show');
-
         @if(session('open_tab') === 'register')
-
             // Open SIGN UP tab
             $('#pills-home-tab').tab('show');
-
         @elseif(session('open_tab') === 'login')
-
             // Open LOGIN tab
             $('#pills-profile-tab').tab('show');
+        @endif
+    @endif
+});
+</script>
+
+<script>
+    $(document).ready(function () {
+         $(document).on('submit', '#partnerRegistrationForm', function (e) {
+            e.preventDefault();
+            let form = this;
+            let formData = new FormData(form);
+            $('#registerBtn')
+                .prop('disabled', true)
+                .text('Sending OTP...');
+            $.ajax({
+
+                url: $(form).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    if (response.status === true) {
+                        $('#myModal').modal('hide');
+                        $('#otpEmail')
+                            .text(response.email);
+                        $('#otp_email')
+                            .val(response.email);
+                        $('#otp')
+                            .val('');
+                        $('#otpError')
+                            .hide()
+                            .text('');
+                        $('#otpModal').modal('show');
+                        startOtpTimer();
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(
+                                response.message
+                            );
+                        }
+                    }
+                },
+
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        let errors =
+                            xhr.responseJSON.errors;
+                        $.each(
+                            errors,
+                            function (field, messages) {
+                                if (
+                                    typeof toastr !==
+                                    'undefined'
+                                ) {
+                                    toastr.error(
+                                        messages[0]
+                                    );
+                                }
+                            }
+                        );
+                    } else {
+                        let message =
+                            xhr.responseJSON?.message ??
+                            'Something went wrong. Please try again.';
+                        if (
+                            typeof toastr !== 'undefined'
+                        ) {
+                            toastr.error(message);
+                        } else {
+                            alert(message);
+                        }
+                    }
+                },
+
+                complete: function () {
+                    $('#registerBtn')
+                        .prop('disabled', false)
+                        .text('Sign Up');
+
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#otpVerificationForm').on('submit', function (e) {
+            e.preventDefault();
+            let form = this;
+            let formData = new FormData(form);
+
+            $('#verifyOtpBtn')
+                .prop('disabled', true)
+                .text('Verifying...');
+
+            $('#otpError')
+                .hide()
+                .text('');
+
+            $.ajax({
+                url: "{{ route('verify.otp') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    if (response.status === true) {
+                        clearInterval(
+                            otpTimerInterval
+                        );
+                        $('#otpModal').modal('hide');
+                        // if (typeof toastr !== 'undefined') {
+                        //     toastr.success(
+                        //         response.message
+                        //     );
+                        // }
+                        window.registeredUserType = response.user_type;
+                        setTimeout(function () {
+                            $('#registrationSuccessModal').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                            $('#registrationSuccessModal').modal('show');
+                        }, 1000);
+                    }
+                },
+
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        let message =
+                            xhr.responseJSON?.message ??
+                            'Invalid OTP. Please try again.';
+                        $('#otpError')
+                            .text(message)
+                            .show();
+                        if (
+                            typeof toastr !== 'undefined'
+                        ) {
+                            toastr.error(message);
+                        }
+
+                    } else {
+                        let message =
+                            xhr.responseJSON?.message ??
+                            'Something went wrong. Please try again.';
+                        $('#otpError')
+                            .text(message)
+                            .show();
+                    }
+                },
+                complete: function () {
+                    $('#verifyOtpBtn')
+                        .prop('disabled', false)
+                        .text('Submit');
+
+                }
+            });
+        });
+
+        $('#successDashboardBtn').on('click', function () {
+            // Close success modal
+            $('#registrationSuccessModal').modal('hide');
+            // Redirect to dashboard
+            const userType = window.registeredUserType;
+
+            if (userType === 'area_manager') {
+
+                window.location.href = "{{ route('manager.dashboard') }}";
+
+            } else {
+
+                window.location.href = "{{ route('user.dashboard') }}";
+
+            }
+
+        });
+    });
+</script>
+
+<script>
+    let otpTimerInterval;
+    function startOtpTimer()
+    {
+        let seconds = 60;
+        $('#otpTimer').show();
+        $('#resendOtpBtn').hide();
+        $('#otpTimer').html(
+            'Resend OTP in <strong>' +
+            seconds +
+            '</strong>s'
+        );
+
+        clearInterval(otpTimerInterval);
+        otpTimerInterval = setInterval(function () {
+
+            seconds--;
+
+            $('#otpTimer').html(
+                'Resend OTP in <strong>' +
+                seconds +
+                '</strong>s'
+            );
+
+            if (seconds <= 0) {
+                clearInterval(
+                    otpTimerInterval
+                );
+                $('#otpTimer').hide();
+                $('#resendOtpBtn').show();
+            }
+        }, 1000);
+    }
+</script>
+
+<script>
+$(document).ready(function () {
+    $('#resendOtpBtn').on('click', function () {
+        let email =
+            $('#otp_email').val();
+        if (!email) {
+            toastr.error(
+                'Email address not found.'
+            );
+            return;
+        }
+
+        $('#resendOtpBtn')
+            .prop('disabled', true)
+            .text('Sending...');
+
+        $.ajax({
+            url: "{{ route('resend.otp') }}",
+            type: "POST",
+            data: {
+                _token:
+                    $('meta[name="csrf-token"]').attr('content'),
+                email: email
+            },
+            success: function (response) {
+                if (response.status === true) {
+                    toastr.success(
+                        response.message
+                    );
+                    startOtpTimer();
+                }
+            },
+            error: function (xhr) {
+                let message =
+                    xhr.responseJSON?.message ??
+                    'Unable to resend OTP.';
+                toastr.error(message);
+            },
+            complete: function () {
+                $('#resendOtpBtn')
+                    .prop('disabled', false)
+                    .text('Resend OTP');
+
+            }
+        });
+    });
+
+});
+</script>
+<script>
+$(document).ready(function () {
+
+    // Check URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const openLogin = urlParams.get('open_login');
+
+
+    // Only run when email Login Now is clicked
+    if (openLogin !== '1') {
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | USER ALREADY LOGGED IN
+    |--------------------------------------------------------------------------
+    */
+
+    @auth
+
+        @if(auth()->user()->user_type === 'area_manager')
+
+            window.location.href = "{{ route('manager.dashboard') }}";
+
+        @else
+
+            window.location.href = "{{ route('user.dashboard') }}";
 
         @endif
 
-    @endif
+
+    /*
+    |--------------------------------------------------------------------------
+    | USER NOT LOGGED IN
+    |--------------------------------------------------------------------------
+    */
+
+    @else
+
+        // Open the common register/login modal
+        $('#registerModal').modal('show');
+
+
+        // Activate LOGIN tab
+        $('#pills-profile-tab').tab('show');
+
+
+    @endauth
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Remove ?open_login=1 from URL
+    |--------------------------------------------------------------------------
+    */
+
+    const cleanUrl =
+        window.location.origin +
+        window.location.pathname;
+
+
+    window.history.replaceState(
+        {},
+        document.title,
+        cleanUrl
+    );
 
 });
 </script>
