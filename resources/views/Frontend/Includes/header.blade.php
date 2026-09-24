@@ -37,9 +37,35 @@
                             class="fa-solid fa-phone mr-2"></i>Request a Call</button>
 
 
-                    @if(Auth::check())
+                    @if(Auth::guard('web')->check())
 
-                        <a href="{{ route('user.dashboard') }}">
+                        @php
+                            $user = Auth::guard('web')->user();
+
+                            switch ($user->user_type) {
+                                case 'user':
+                                    $dashboardUrl = route('user.dashboard');
+                                    break;
+
+                                case 'area_manager':
+                                    $dashboardUrl = route('manager.dashboard');
+                                    break;
+
+                                case 'driver':
+                                    $dashboardUrl = route('driver.dashboard');
+                                    break;
+
+                                case 'car_owner':
+                                    $dashboardUrl = route('car_owner.dashboard');
+                                    break;
+
+                                default:
+                                    $dashboardUrl = route('home.index');
+                                    break;
+                            }
+                        @endphp
+
+                        <a href="{{ $dashboardUrl }}">
                             <i class="fa-solid fa-user"></i>
                         </a>
 
@@ -1752,6 +1778,7 @@ $(document).ready(function () {
                         //     );
                         // }
                         window.registeredUserType = response.user_type;
+                        window.redirectUserUrl = response.redirectUserUrl;
                         setTimeout(function () {
                             $('#registrationSuccessModal').modal({
                                 backdrop: 'static',
@@ -1798,16 +1825,18 @@ $(document).ready(function () {
             // Close success modal
             $('#registrationSuccessModal').modal('hide');
             // Redirect to dashboard
-            const userType = window.registeredUserType;
+            // const userType = window.registeredUserType;
 
-            if (userType === 'area_manager') {
+            // if (userType === 'area_manager') {
+            //     window.location.href = "{{ route('manager.dashboard') }}";
+            // } else {
+            //     window.location.href = "{{ route('user.dashboard') }}";
+            // }
 
-                window.location.href = "{{ route('manager.dashboard') }}";
-
+            if (window.redirectUserUrl) {
+                window.location.href = window.redirectUserUrl;
             } else {
-
-                window.location.href = "{{ route('user.dashboard') }}";
-
+                window.location.href = "{{ route('home.index') }}";
             }
 
         });
@@ -1895,7 +1924,6 @@ $(document).ready(function () {
             }
         });
     });
-
 });
 </script>
 <script>
@@ -1903,53 +1931,28 @@ $(document).ready(function () {
 
     // Check URL
     const urlParams = new URLSearchParams(window.location.search);
-
     const openLogin = urlParams.get('open_login');
-
 
     // Only run when email Login Now is clicked
     if (openLogin !== '1') {
         return;
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | USER ALREADY LOGGED IN
-    |--------------------------------------------------------------------------
-    */
+    } 
 
     @auth
-
         @if(auth()->user()->user_type === 'area_manager')
-
             window.location.href = "{{ route('manager.dashboard') }}";
-
         @else
-
             window.location.href = "{{ route('user.dashboard') }}";
-
         @endif
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | USER NOT LOGGED IN
-    |--------------------------------------------------------------------------
-    */
-
     @else
 
         // Open the common register/login modal
         $('#registerModal').modal('show');
 
-
         // Activate LOGIN tab
         $('#pills-profile-tab').tab('show');
 
-
     @endauth
-
 
     /*
     |--------------------------------------------------------------------------

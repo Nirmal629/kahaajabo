@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\UserAuthController;
 use App\Http\Controllers\Frontend\ContactEnquiryController;
+use App\Http\Controllers\Frontend\AreaManagerAuthController;
 
 use Illuminate\Support\Facades\DB;
 
@@ -39,17 +40,46 @@ Route::post('/request-contact-enquiry', [ContactEnquiryController::class, 'conta
 Route::post('/user-register', [UserAuthController::class, 'user_registration'])->name('user.register');
 Route::post('/user-login', [UserAuthController::class, 'user_login'])->name('user.login');
  
-Route::view('/manager-dashboard', 'Manager-Dashboard.dashboard')->name('manager.dashboard');
-Route::view('/manager/car-list', 'Manager-Dashboard.car-list')->name('manager.car-list');
 
 
-Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
+// Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
+
+//     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
+//     Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
+
+
+// });
+
+
+Route::middleware(['auth:web'])->group(function () {
+    Route::post('/logout',[UserAuthController::class, 'logout'])->name('logout');
+});
+
+
+Route::middleware(['auth:web','user.type:user'])->prefix('user')->name('user.')->group(function () {
 
     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
-    Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
-
 
 });
+
+
+Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')->name('manager.')->group(function () {
+
+    Route::get('/dashboard',[AreaManagerAuthController::class, 'dashboard'])->name('dashboard');
+
+});
+
+// Route::middleware(['auth','user.type:driver'])->prefix('driver')->name('driver.')->group(function () {
+
+//     Route::get('/dashboard', [DriverController::class, 'dashboard'])->name('dashboard');
+
+// });
+
+// Route::middleware(['auth','user.type:car_owner'])->prefix('car-owner')->name('car_owner.')->group(function () {
+
+//     Route::get('/dashboard',[CarOwnerController::class, 'dashboard'])->name('dashboard');
+
+// });
 
 
 

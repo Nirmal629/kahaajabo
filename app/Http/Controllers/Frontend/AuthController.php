@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -251,16 +253,15 @@ class AuthController extends Controller
 
             $userType = $externalUser->user_type ?? 'area_manager';
 
-            $user = User::where('email', $externalUser->email)->first();
+            $userexists = User::where('email', $externalUser->email)->first();
 
-            if (!$user) {
+            if (!$userexists) {
 
                 $password = Str::random(10);
                 $user = User::create([
                     'name'   => collect([
-                                    $request->first_name,
-                                    $request->middle_name,
-                                    $request->last_name,
+                                    $externalUser->first_name,
+                                    $externalUser->last_name,
                                 ])->filter()->implode(' '),
                     'first_name'   => $externalUser->first_name,
                     'last_name'    => $externalUser->last_name,
@@ -279,7 +280,6 @@ class AuthController extends Controller
                     ));
             }
 
-
             $externalUser->update([
                 'status' => 1,
                 'otp' => null,
@@ -287,12 +287,24 @@ class AuthController extends Controller
                 'otp_attempts' => 0,
             ]);
 
+
+            Auth::guard('web')->login($user);
+
+            $request->session()->regenerate();
+
+            DB::commit();
+
+            $redirect = $this->getDashboardUrl(
+                $userType
+            );
+
             return response()->json([
                 'status' => true,
                 'user_type' => $userType,
                 'email' => $user->email,
                 'message' => 'Your account has been successfully verified.',
-                'redirect' => route('home.index'),
+                // 'redirect' => route('home.index'),
+                'redirectUserUrl' =>  $redirect,
             ]);
         } catch (\Throwable $e) {
             return response()->json([
@@ -353,6 +365,37 @@ class AuthController extends Controller
                 'status' => false,
                 'message' => 'Unable to send OTP. Please try again.',
             ], 500);
+        }
+    }
+
+
+    private function getDashboardUrl($userType)
+    {
+        switch ($userType) {
+
+            case 'user':
+
+                return route('user.dashboard');
+
+
+            case 'area_manager':
+
+                return route('manager.dashboard');
+
+
+            // case 'driver':
+
+            //     return route('driver.dashboard');
+
+
+            // case 'car_owner':
+
+            //     return route('car_owner.dashboard');
+
+
+            default:
+
+                return route('home.index');
         }
     }
 }
