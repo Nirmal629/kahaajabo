@@ -13,7 +13,7 @@
                 <a class="dropdown-item" href="/my-profile">
                     <i class="fa-regular fa-user mr-2"></i> My Profile</a>
 
-                <a class="dropdown-item" href="{{ route('user.logout') }}">
+                <a class="dropdown-item" href="{{ route('logout') }}">
                     <i class="fa fa-sign-out mr-2"></i>Logout</a>
             </div>
         </li>

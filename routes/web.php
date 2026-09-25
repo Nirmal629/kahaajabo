@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\UserAuthController;
 use App\Http\Controllers\Frontend\ContactEnquiryController;
 use App\Http\Controllers\Frontend\AreaManagerAuthController;
+use App\Http\Controllers\Frontend\DriverAuthController;
 
 use Illuminate\Support\Facades\DB;
 
@@ -34,11 +35,19 @@ Route::post('/verify-otp',[AuthController::class, 'verify_otp'])->name('verify.o
 Route::post('/resend-otp',[AuthController::class, 'resend_otp'])->name('resend.otp');
 
 Route::post('/driver-register', [AuthController::class, 'driver_registration'])->name('driver.register');
+
 Route::post('/request-call-enquiry', [ContactEnquiryController::class, 'call_enquiry'])->name('requestCall.enquiry.store');
 Route::post('/request-contact-enquiry', [ContactEnquiryController::class, 'contact_enquiry'])->name('contact.enquiry.store');
 
 Route::post('/user-register', [UserAuthController::class, 'user_registration'])->name('user.register');
+Route::post('/user/register/send-otp',[UserAuthController::class, 'sendUserRegistrationOtp'])->name('user.register.send.otp');
+Route::post('/user/register/verify-otp',[UserAuthController::class, 'verifyUserRegistrationOtp'])->name('user.register.verify.otp');
+Route::post('/user/register/resend-otp',[UserAuthController::class, 'resendUserRegistrationOtp'])->name('user.register.resend.otp');
+
 Route::post('/user-login', [UserAuthController::class, 'user_login'])->name('user.login');
+Route::post('/login/send-otp', [UserAuthController::class, 'sendLoginOtp'])->name('login.send.otp');
+Route::post('/login/verify-otp', [UserAuthController::class, 'verifyLoginOtp'])->name('login.verify.otp');
+Route::post('/login/resend-otp', [UserAuthController::class, 'resendLoginOtp'])->name('login.resend.otp');
  
 
 
@@ -52,7 +61,7 @@ Route::post('/user-login', [UserAuthController::class, 'user_login'])->name('use
 
 
 Route::middleware(['auth:web'])->group(function () {
-    Route::post('/logout',[UserAuthController::class, 'logout'])->name('logout');
+    Route::get('/logout',[UserAuthController::class, 'logout'])->name('logout');
 });
 
 
@@ -69,11 +78,11 @@ Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')
 
 });
 
-// Route::middleware(['auth','user.type:driver'])->prefix('driver')->name('driver.')->group(function () {
+Route::middleware(['auth','user.type:driver'])->prefix('driver')->name('driver.')->group(function () {
 
-//     Route::get('/dashboard', [DriverController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DriverAuthController::class, 'dashboard'])->name('dashboard');
 
-// });
+});
 
 // Route::middleware(['auth','user.type:car_owner'])->prefix('car-owner')->name('car_owner.')->group(function () {
 

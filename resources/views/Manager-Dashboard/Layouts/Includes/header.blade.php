@@ -8,8 +8,13 @@
                 <img src="{{asset('public/Frontend/Assets/images/image1.jpg')}}" alt="profile-pic" class="img-fluid mr-2">
                 John Doe
             </a>
-            <div class="dropdown-menu"><a class="dropdown-item" href="/my-profile"><i
-                        class="fa-regular fa-user mr-2"></i> My Profile</a></div>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/my-profile"><i
+                        class="fa-regular fa-user mr-2"></i> My Profile</a>
+
+                <a class="dropdown-item" href="{{ route('logout') }}">
+                    <i class="fa fa-sign-out mr-2"></i>Logout</a>
+            </div>
         </li>
     </ul>
-</nav>
+</nav> 

@@ -307,7 +307,7 @@
                         class="fa-solid fa-x"></i></button>
             </div>
             <div class="modal-body">
-                <form method="POST"
+                <form method="POST" id="driverRegistrationForm"
                     action="{{ route('driver.register') }}"
                     enctype="multipart/form-data">
 
@@ -376,100 +376,8 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <!-- Country -->
-                    <div class="form-group">
-                        <label>Country</label>
-
-                        <select id="driver_country_id"
-                                name="driver_country_id"
-                                class="form-control location-country">
-
-                            <option value="">Choose Country</option>
-
-                            @foreach($countries as $country)
-                                <option value="{{ $country->id }}"
-                                    {{ old('driver_country_id') == $country->id ? 'selected' : '' }}>
-                                    {{ $country->country_name }}
-                                </option>
-                            @endforeach
-
-                        </select>
-
-                        @error('driver_country_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!-- State -->
-                    <div class="form-group">
-                        <label>State</label>
-
-                        <select id="driver_state_id"
-                                name="driver_state_id"
-                                class="form-control location-state"
-                                disabled>
-
-                            <option value="">Choose State</option>
-
-                        </select>
-
-                        @error('driver_state_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!-- District -->
-                    <div class="form-group">
-                        <label>District</label>
-
-                        <select id="driver_district_id"
-                                name="driver_district_id"
-                                class="form-control location-district"
-                                disabled>
-
-                            <option value="">Choose District</option>
-
-                        </select>
-
-                        @error('driver_district_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!-- City -->
-                    <div class="form-group">
-                        <label>City Of Operation</label>
-
-                        <select id="driver_city_id"
-                                name="driver_city_id"
-                                class="form-control location-city"
-                                disabled>
-
-                            <option value="">Choose City</option>
-
-                        </select>
-
-                        @error('driver_city_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label>Area</label>
-
-                        <select id="driver_area_id"
-                                name="driver_area_id"
-                                class="form-control location-area"
-                                disabled>
-
-                            <option value="">Choose Area..</option>
-
-                        </select>
-
-                        @error('driver_area_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-
-                    <button type="submit"
+     
+                    <button type="submit" id="driverRegisterButton"
                             class="Primary-btn m-auto d-table">
                         Submit
                     </button>
@@ -705,50 +613,39 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade" id="pills-home" role="tabpanel"
                         aria-labelledby="pills-home-tab">
-                        <form action="{{ route('user.register') }}" method="POST">
+                        <form id="userRegistrationForm">
                             @csrf
-
                             <div class="form-group">
                                 <label>Name *</label>
 
                                 <div class="row">
+
                                     <div class="col">
                                         <input type="text"
                                             name="first_name"
-                                            class="form-control @error('first_name', 'registration') is-invalid @enderror"
+                                            id="user_first_name"
+                                            class="form-control"
                                             placeholder="First name"
-                                            value="{{ old('first_name') }}"
                                             required>
-
-                                        @error('first_name', 'registration')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
 
                                     <div class="col">
                                         <input type="text"
                                             name="middle_name"
-                                            class="form-control @error('middle_name', 'registration') is-invalid @enderror"
-                                            placeholder="Middle name"
-                                            value="{{ old('middle_name') }}">
-
-                                        @error('middle_name', 'registration')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                            id="user_middle_name"
+                                            class="form-control"
+                                            placeholder="Middle name">
                                     </div>
 
                                     <div class="col">
                                         <input type="text"
                                             name="last_name"
-                                            class="form-control @error('last_name', 'registration') is-invalid @enderror"
+                                            id="user_last_name"
+                                            class="form-control"
                                             placeholder="Last name"
-                                            value="{{ old('last_name') }}"
                                             required>
-
-                                        @error('last_name', 'registration')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
+
                                 </div>
                             </div>
 
@@ -757,14 +654,10 @@
 
                                 <input type="email"
                                     name="email"
-                                    class="form-control @error('email', 'registration') is-invalid @enderror"
+                                    id="user_register_email"
+                                    class="form-control"
                                     placeholder="Enter your email"
-                                    value="{{ old('email') }}"
                                     required>
-
-                                @error('email', 'registration')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -772,16 +665,12 @@
 
                                 <input type="text"
                                     name="primary_mobile"
-                                    class="form-control @error('primary_mobile', 'registration') is-invalid @enderror"
+                                    id="user_primary_mobile"
+                                    class="form-control"
                                     placeholder="Enter your mobile no"
-                                    value="{{ old('primary_mobile') }}"
                                     maxlength="10"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     required>
-
-                                @error('primary_mobile', 'registration')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -789,88 +678,54 @@
 
                                 <input type="text"
                                     name="secondary_mobile"
-                                    class="form-control @error('secondary_mobile', 'registration') is-invalid @enderror"
+                                    id="user_secondary_mobile"
+                                    class="form-control"
                                     placeholder="Enter your secondary mobile no"
-                                    value="{{ old('secondary_mobile') }}"
                                     maxlength="10"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                    >
-
-                                @error('secondary_mobile')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             </div>
 
-                            <div class="form-group">
-                                <label>Address *</label>
-
-                                <input type="text"
-                                    name="address"
-                                    class="form-control @error('address', 'registration') is-invalid @enderror"
-                                    placeholder="Enter your address"
-                                    value="{{ old('address') }}"
-                                    required>
-
-                                @error('address')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                            <div id="userRegistrationError"
+                                class="text-danger mb-2"
+                                style="display:none;">
                             </div>
 
-                            <div class="form-group">
-                                <label>Password *</label>
+                            <button type="submit"
+                                    id="userRegisterBtn"
+                                    class="Primary-btn m-auto d-table">
 
-                                <input type="password"
-                                    name="password"
-                                    class="form-control @error('password', 'registration') is-invalid @enderror"
-                                    placeholder="Enter your password"
-                                    required>
-
-                                @error('password', 'registration')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Confirm Password *</label>
-
-                                <input type="password"
-                                    name="password_confirmation"
-                                    class="form-control @error('password_confirmation', 'registration') is-invalid @enderror"
-                                    placeholder="Confirm your password"
-                                    required>
-
-                                @error('password_confirmation', 'registration')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="Primary-btn m-auto d-table">
                                 Register
+
                             </button>
                         </form>
                     </div>
-                    <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                    <div class="tab-pane fade show active"
+                        id="pills-profile"
+                        role="tabpanel"
                         aria-labelledby="pills-profile-tab">
+
                         @if(session('login_error'))
                             <div class="alert alert-danger">
                                 {{ session('login_error') }}
                             </div>
                         @endif
 
+
+                        {{-- ================= PASSWORD LOGIN ================= --}}
                         <form action="{{ route('user.login') }}" method="POST">
                             @csrf
-                            {{-- <div class="form-group">
-                                <label for="exampleInputEmail1">Username*</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Enter Username">
-                            </div> --}}
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email*</label>
+
+                            {{-- Email --}}
+                            <div class="form-group mb-3">
+                                <label for="loginEmail">Email*</label>
+
                                 <input type="email"
                                     name="login_email"
+                                    id="loginEmail"
                                     class="form-control @error('login_email', 'login') is-invalid @enderror"
                                     placeholder="Enter Email"
                                     value="{{ old('login_email') }}"
+                                    autocomplete="email"
                                     required>
 
                                 @error('login_email', 'login')
@@ -878,27 +733,156 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Password*</label>
-                                <input type="password"
-                                    name="login_password"
-                                    class="form-control @error('login_password', 'login') is-invalid @enderror"
-                                    placeholder="Password"
-                                    required>
+
+
+                            {{-- Password --}}
+                            <div class="form-group mb-2">
+                                <label for="loginPassword">Password*</label>
+
+                                <div class="password-wrapper position-relative">
+
+                                    <input type="password"
+                                        name="login_password"
+                                        id="loginPassword"
+                                        class="form-control @error('login_password', 'login') is-invalid @enderror"
+                                        placeholder="Password"
+                                        autocomplete="current-password"
+                                        required>
+
+                                    <span id="toggleLoginPassword"
+                                        style="
+                                            position:absolute;
+                                            right:15px;
+                                            top:50%;
+                                            transform:translateY(-50%);
+                                            cursor:pointer;
+                                            color:#777;
+                                            z-index:10;
+                                        ">
+                                        <i class="fa-solid fa-eye-slash"></i>
+                                    </span>
+
+                                </div>
 
                                 @error('login_password', 'login')
-                                    <div class="invalid-feedback">
+                                    <div class="invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            <button type="submit" class="Primary-btn m-auto d-table">Sign
-                                in</button>
-                            <p class="forget_password"><a href="#">Forgot password?</a></p>
+
+                            {{-- Forgot Password --}}
+                            <div class="text-right mb-3">
+                                <a href=""
+                                class="forget_password">
+                                    Forgot password?
+                                </a>
+                            </div>
+
+
+                            {{-- Email OTP Login --}}
+                            <div class="text-center mb-3">
+                                <a href="javascript:void(0);"
+                                id="showEmailOtpLogin"
+                                class="email-otp-login">
+                                    Sign in using email OTP
+                                </a>
+                            </div>
+
+                            {{-- Sign In --}}
+                            <button type="submit"
+                                class="Primary-btn m-auto d-table w-100">
+                                Sign in
+                            </button>
+
                         </form>
+
+
+                        {{-- ================= EMAIL OTP LOGIN ================= --}}
+                        <div id="emailOtpLoginBox" style="display:none;">
+
+                            <div class="otp-login-header">
+                                <h5>Sign in using email OTP</h5>
+
+                                <p>
+                                    Enter your email address and we'll send you a
+                                    verification code.
+                                </p>
+                            </div>
+
+
+                            <form id="emailOtpLoginForm">
+
+                                @csrf
+
+                                <div class="form-group mb-3">
+
+                                    <label for="otpLoginEmail">
+                                        Email*
+                                    </label>
+
+                                    <input type="email"
+                                        name="email"
+                                        id="otpLoginEmail"
+                                        class="form-control"
+                                        placeholder="Enter Email"
+                                        required>
+
+                                    <div id="otpLoginEmailError"
+                                        class="text-danger mt-1"
+                                        style="display:none;">
+                                    </div>
+
+                                </div>
+
+
+                                <button type="submit"
+                                    id="sendLoginOtpBtn"
+                                    class="Primary-btn m-auto d-table w-100">
+
+                                    Send OTP
+
+                                </button>
+
+                            </form>
+
+
+                            {{-- Back to password login --}}
+                            <div class="text-center mt-3">
+
+                                <a href="javascript:void(0);"
+                                id="backToPasswordLogin"
+                                class="email-otp-login">
+
+                                    ← Sign in using password
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        {{-- ================= DIVIDER ================= --}}
+                        <div class="login-divider">
+                            <span>OR</span>
+                        </div>
+
+
+                        {{-- ================= GOOGLE LOGIN ================= --}}
+                        <a href=""
+                        class="google-login-btn">
+
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                alt="Google"
+                                class="google-icon">
+
+                            <span>Continue with Google</span>
+
+                        </a>
+
                     </div>
                 </div>
 
@@ -1009,6 +993,215 @@
                         </button>
 
                     </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade"
+     id="loginOtpModal"
+     tabindex="-1"
+     aria-labelledby="otpModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content otp-modal-content">
+
+            <div class="modal-body">
+
+                <div class="otp-container">
+
+                    <h2 class="otp-title">
+                        OTP Verification
+                    </h2>
+
+
+                    <!-- Email Message -->
+                    <div class="otp-message">
+
+                        We've sent a verification code to your
+                        email -
+
+                        <strong id="loginOtpEmail"></strong>
+
+                    </div>
+
+
+                    <!-- OTP Form -->
+                    <form id="loginOtpVerificationForm">
+
+                        @csrf
+
+                        <!-- Hidden Email -->
+                        <input type="hidden"
+                               name="login_email"
+                               id="loginOtp_email">
+
+
+                        <!-- OTP -->
+                        <div class="mb-3">
+
+                            <input type="text"
+                                   name="login_otp"
+                                   id="login_otp"
+                                   class="form-control otp-input"
+                                   placeholder="Enter verification code"
+                                   maxlength="6"
+                                   inputmode="numeric"
+                                   autocomplete="one-time-code">
+
+                        </div>
+
+
+                        <!-- OTP Error -->
+                        <div id="loginOtpError"
+                             class="text-danger mb-3"
+                             style="display:none;">
+                        </div>
+
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                id="verifyLoginOtpBtn"
+                                class="btn otp-submit-btn">
+
+                            Submit
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- Timer -->
+                    <div class="text-center mt-3">
+
+                        <span id="LoginotpTimer">
+
+                            Resend OTP in
+                            <strong>60</strong>s
+
+                        </span>
+
+
+                        <button type="button"
+                                id="resendLoginOtpBtn"
+                                class="btn btn-link"
+                                style="display:none;">
+
+                            Resend OTP
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade"
+     id="userRegistrationOtpModal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Verify Email
+                </h5>
+
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal">
+
+                    <span>&times;</span>
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <p class="text-center">
+                    Enter the OTP sent to
+                    <strong id="userRegistrationOtpEmail"></strong>
+                </p>
+
+
+                <form id="userRegistrationOtpForm">
+
+                    @csrf
+
+                    <input type="hidden"
+                           id="userRegistrationEmail"
+                           name="email">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Enter OTP
+                        </label>
+
+                        <input type="text"
+                               id="userRegistrationOtp"
+                               name="otp"
+                               class="form-control text-center"
+                               maxlength="6"
+                               inputmode="numeric"
+                               required>
+
+                        <div id="userRegistrationOtpError"
+                             class="text-danger mt-2"
+                             style="display:none;">
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit"
+                            id="verifyUserRegistrationOtpBtn"
+                            class="Primary-btn w-100">
+
+                        Verify OTP
+
+                    </button>
+
+                </form>
+
+
+                <div class="text-center mt-3">
+
+                    <span id="userRegistrationOtpTimer">
+                        Resend OTP in
+                        <strong>60</strong>s
+                    </span>
+
+                    <a href="javascript:void(0);"
+                       id="resendUserRegistrationOtp"
+                       style="display:none;">
+
+                        Resend OTP
+
+                    </a>
 
                 </div>
 
@@ -1972,4 +2165,775 @@ $(document).ready(function () {
     );
 
 });
+</script>
+
+<script>
+$(document).ready(function () {
+    // Show OTP login
+    $('#showEmailOtpLogin').on('click', function () {
+
+        $('#pills-profile form:first').hide();
+
+        $('#emailOtpLoginBox').slideDown();
+
+    });
+
+
+    // Back to password login
+    $('#backToPasswordLogin').on('click', function () {
+
+        $('#emailOtpLoginBox').hide();
+
+        $('#pills-profile form:first').slideDown();
+
+    });
+
+
+    // Password show/hide
+    $('#toggleLoginPassword').on('click', function () {
+
+        let passwordInput = $('#loginPassword');
+        let icon = $(this).find('i');
+
+        if (passwordInput.attr('type') === 'password') {
+
+            passwordInput.attr('type', 'text');
+
+            icon.removeClass('fa-eye-slash')
+                .addClass('fa-eye');
+
+        } else {
+
+            passwordInput.attr('type', 'password');
+
+            icon.removeClass('fa-eye')
+                .addClass('fa-eye-slash');
+        }
+
+    });
+
+
+    // Send OTP
+    $('#emailOtpLoginForm').on('submit', function (e) {
+
+        e.preventDefault();
+
+        let email = $('#otpLoginEmail').val();
+        let button = $('#sendLoginOtpBtn');
+
+        $('#otpLoginEmailError')
+            .hide()
+            .text('');
+
+        button.prop('disabled', true);
+        button.text('Sending OTP...');
+
+        $.ajax({
+            url: "{{ route('login.send.otp') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                email: email
+            },
+
+            success: function (response) {
+
+                button.prop('disabled', false);
+                button.text('Send OTP');
+
+        
+                if (response.status) {
+                    // Store email
+                    $('#loginOtp_email').val(response.email);
+                    // Show email inside OTP modal
+                    $('#loginOtpEmail').text(response.email);
+                    // Clear previous OTP
+                    $('#login_otp').val('');
+                    $('#loginOtpError')
+                        .hide()
+                        .text('');
+
+                    // Hide login/register modal
+                    $('#registerModal').modal('hide');
+                    // Wait for previous modal to close
+                    setTimeout(function () {
+                        $('#loginOtpModal').modal('show');
+                        // Start timer
+                        if (typeof startLoginOtpTimer === 'function') {
+                            startLoginOtpTimer();
+                        }
+                    }, 300);
+
+                } else {
+                    $('#otpLoginEmailError')
+                        .text(response.message)
+                        .show();
+                }
+            },
+            error: function (xhr) {
+
+                button.prop('disabled', false);
+                button.text('Send OTP');
+
+                let message =
+                    'Something went wrong. Please try again.';
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+                    message = xhr.responseJSON.message;
+                }
+
+                $('#otpLoginEmailError')
+                    .text(message)
+                    .show();
+            }
+
+        });
+
+    });
+
+    $('#loginOtpVerificationForm').on('submit', function (e) {
+        e.preventDefault();
+        let form = this;
+        let formData = new FormData(form);
+
+        $('#verifyLoginOtpBtn')
+            .prop('disabled', true)
+            .text('Verifying...');
+
+        $('#loginOtpError')
+            .hide()
+            .text('');
+
+        $.ajax({
+            url: "{{ route('login.verify.otp') }}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                if (response.status === true) {
+                    clearInterval(
+                        loginotpTimerInterval
+                    );
+                    $('#loginOtpModal').modal('hide');
+
+                    toastr.success(
+                        response.message || 'Login successful!'
+                    );
+
+                    // Redirect after toast
+                    setTimeout(function () {
+                        if (response.redirectUserUrl) {
+                            window.location.href = esponse.redirectUserUrl;
+                        } else {
+                            window.location.href = "{{ route('home.index') }}";
+                        }
+
+                    }, 1500); // 1.5 seconds
+                
+                }
+            },
+
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    let message =
+                        xhr.responseJSON?.message ??
+                        'Invalid OTP. Please try again.';
+                    $('#otpError')
+                        .text(message)
+                        .show();
+                    if (
+                        typeof toastr !== 'undefined'
+                    ) {
+                        toastr.error(message);
+                    }
+
+                } else {
+                    let message =
+                        xhr.responseJSON?.message ??
+                        'Something went wrong. Please try again.';
+                    $('#otpError')
+                        .text(message)
+                        .show();
+                }
+            },
+            complete: function () {
+                $('#verifyOtpBtn')
+                    .prop('disabled', false)
+                    .text('Submit');
+
+            }
+        });
+    });
+
+    $('#resendLoginOtpBtn').on('click', function () {
+        let email =
+            $('#loginOtp_email').val();
+        if (!email) {
+            toastr.error(
+                'Email address not found.'
+            );
+            return;
+        }
+
+        $('#resendLoginOtpBtn')
+            .prop('disabled', true)
+            .text('Sending...');
+
+        $.ajax({
+            url: "{{ route('login.resend.otp') }}",
+            type: "POST",
+            data: {
+                _token:
+                    $('meta[name="csrf-token"]').attr('content'),
+                email: email
+            },
+            success: function (response) {
+                if (response.status === true) {
+                    toastr.success(
+                        response.message
+                    );
+                    startOtpTimer();
+                }
+            },
+            error: function (xhr) {
+                let message =
+                    xhr.responseJSON?.message ??
+                    'Unable to resend OTP.';
+                toastr.error(message);
+            },
+            complete: function () {
+                $('#resendLoginOtpBtn')
+                    .prop('disabled', false)
+                    .text('Resend OTP');
+
+            }
+        });
+    });
+
+});
+</script>
+
+<script>
+    let loginotpTimerInterval;
+    function startLoginOtpTimer()
+    {
+        let seconds = 60;
+        $('#LoginotpTimer').show();
+        $('#resendLoginOtpBtn').hide();
+        $('#LoginotpTimer').html(
+            'Resend OTP in <strong>' +
+            seconds +
+            '</strong>s'
+        );
+
+        clearInterval(loginotpTimerInterval);
+        loginotpTimerInterval = setInterval(function () {
+
+            seconds--;
+
+            $('#LoginotpTimer').html(
+                'Resend OTP in <strong>' +
+                seconds +
+                '</strong>s'
+            );
+
+            if (seconds <= 0) {
+                clearInterval(
+                    loginotpTimerInterval
+                );
+                $('#LoginotpTimer').hide();
+                $('#resendLoginOtpBtn').show();
+            }
+        }, 1000);
+    }
+</script>
+
+<script>
+$(document).ready(function () {
+    $('#userRegistrationForm').on('submit', function (e) {
+
+        e.preventDefault();
+
+        let form = this;
+
+        let button = $('#userRegisterBtn');
+
+        $('#userRegistrationError')
+            .hide()
+            .text('');
+
+        button
+            .prop('disabled', true)
+            .text('Sending OTP...');
+
+
+        $.ajax({
+
+            url: "{{ route('user.register.send.otp') }}",
+
+            type: "POST",
+
+            data: $(form).serialize(),
+
+            success: function (response) {
+
+                console.log(
+                    'Registration OTP response:',
+                    response
+                );
+
+                button
+                    .prop('disabled', false)
+                    .text('Register');
+
+
+                if (response.status === true) {
+
+                    // Store email
+                    $('#userRegistrationEmail')
+                        .val(response.email);
+
+                    // Display email
+                    $('#userRegistrationOtpEmail')
+                        .text(response.email);
+
+                    // Clear OTP
+                    $('#userRegistrationOtp')
+                        .val('');
+
+                    // Hide registration modal
+                    $('#registerModal').modal('hide');
+
+
+                    // Show OTP modal
+                    setTimeout(function () {
+
+                        $('#userRegistrationOtpModal')
+                            .modal('show');
+
+                        startUserRegistrationOtpTimer();
+
+                    }, 300);
+
+                } else {
+
+                    $('#userRegistrationError')
+                        .text(response.message)
+                        .show();
+
+                }
+
+            },
+
+            error: function (xhr) {
+
+                button
+                    .prop('disabled', false)
+                    .text('Register');
+
+
+                let message =
+                    'Something went wrong. Please try again.';
+
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+
+                    message =
+                        xhr.responseJSON.message;
+
+                }
+
+
+                $('#userRegistrationError')
+                    .text(message)
+                    .show();
+
+            }
+
+        });
+
+    });
+
+    $('#userRegistrationOtpForm').on('submit', function (e) {
+
+        e.preventDefault();
+
+        let button =
+            $('#verifyUserRegistrationOtpBtn');
+
+
+        button
+            .prop('disabled', true)
+            .text('Verifying...');
+
+
+        $('#userRegistrationOtpError')
+            .hide()
+            .text('');
+
+
+        $.ajax({
+
+            url: "{{ route('user.register.verify.otp') }}",
+
+            type: "POST",
+
+            data: $(this).serialize(),
+
+
+            success: function (response) {
+
+                console.log(
+                    'Registration verification:',
+                    response
+                );
+
+
+                if (response.status === true) {
+
+                    clearInterval(
+                        userRegistrationOtpTimer
+                    );
+
+
+                    $('#userRegistrationOtpModal')
+                        .modal('hide');
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Show success toast
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (typeof toastr !== 'undefined') {
+
+                        toastr.success(
+                            response.message ||
+                            'Registration successful!'
+                        );
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Redirect after toast
+                    |--------------------------------------------------------------------------
+                    */
+
+                    setTimeout(function () {
+
+                        if (
+                            response.redirectUserUrl
+                        ) {
+
+                            window.location.href =
+                                response.redirectUserUrl;
+
+                        } else {
+
+                            window.location.href =
+                                "{{ route('user.dashboard') }}";
+
+                        }
+
+                    }, 1500);
+
+                }
+
+            },
+
+
+            error: function (xhr) {
+
+                let message =
+                    'Invalid OTP. Please try again.';
+
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+
+                    message =
+                        xhr.responseJSON.message;
+
+                }
+
+
+                $('#userRegistrationOtpError')
+                    .text(message)
+                    .show();
+
+
+                if (typeof toastr !== 'undefined') {
+
+                    toastr.error(message);
+
+                }
+
+            },
+
+
+            complete: function () {
+
+                button
+                    .prop('disabled', false)
+                    .text('Verify OTP');
+
+            }
+
+        });
+
+    });
+
+    $('#resendUserRegistrationOtp').on('click', function () {
+
+        let button = $(this);
+        let email = $('#userRegistrationEmail').val();
+        if (!email) {
+            $('#userRegistrationOtpError')
+                .text('Email address is missing. Please register again.')
+                .show();
+
+            return;
+        }
+
+        button
+            .css('pointer-events', 'none')
+            .text('Sending...');
+
+        $('#userRegistrationOtpError')
+            .hide()
+            .text('');
+
+        $.ajax({
+
+            url: "{{ route('user.register.resend.otp') }}",
+
+            type: "POST",
+
+            data: {
+                _token: "{{ csrf_token() }}",
+                email: email
+            },
+
+            success: function (response) {
+
+                console.log('Resend OTP response:', response);
+
+                if (response.status === true) {
+
+                    $('#userRegistrationOtp').val('');
+
+                    $('#userRegistrationOtpError')
+                        .hide()
+                        .text('');
+
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success(
+                            response.message || 'OTP has been resent successfully.'
+                        );
+                    }
+
+                    startUserRegistrationOtpTimer();
+                }
+                else {
+
+                    let message = response.message ||
+                        'Unable to resend OTP. Please try again.';
+
+                    $('#userRegistrationOtpError')
+                        .text(message)
+                        .show();
+
+                    if (typeof toastr !== 'undefined') {
+                        toastr.error(message);
+                    }
+                }
+            },
+
+            error: function (xhr) {
+
+                let message = 'Unable to resend OTP. Please try again.';
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+                    message = xhr.responseJSON.message;
+                }
+
+                $('#userRegistrationOtpError')
+                    .text(message)
+                    .show();
+
+                if (typeof toastr !== 'undefined') {
+                    toastr.error(message);
+                }
+            },
+
+            complete: function () {
+
+                button
+                    .css('pointer-events', 'auto')
+                    .text('Resend OTP');
+            }
+        });
+    });
+});
+</script>
+<script>
+    let userRegistrationOtpTimer;
+
+    function startUserRegistrationOtpTimer()
+    {
+        let seconds = 60;
+
+
+        clearInterval(
+            userRegistrationOtpTimer
+        );
+
+
+        $('#userRegistrationOtpTimer')
+            .show();
+
+
+        $('#resendUserRegistrationOtp')
+            .hide();
+
+
+        $('#userRegistrationOtpTimer').html(
+
+            'Resend OTP in <strong>' +
+            seconds +
+            '</strong>s'
+
+        );
+
+
+        userRegistrationOtpTimer =
+            setInterval(function () {
+
+                seconds--;
+
+
+                $('#userRegistrationOtpTimer').html(
+
+                    'Resend OTP in <strong>' +
+                    seconds +
+                    '</strong>s'
+
+                );
+
+
+                if (seconds <= 0) {
+
+                    clearInterval(
+                        userRegistrationOtpTimer
+                    );
+
+
+                    $('#userRegistrationOtpTimer')
+                        .hide();
+
+
+                    $('#resendUserRegistrationOtp')
+                        .show();
+
+                }
+
+            }, 1000);
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+         $(document).on('submit', '#driverRegistrationForm', function (e) {
+            e.preventDefault();
+            let form = this;
+            let formData = new FormData(form);
+            $('#driverRegisterButton')
+                .prop('disabled', true)
+                .text('Sending OTP...');
+            $.ajax({
+
+                url: $(form).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    if (response.status === true) {
+                        $('#driverModal').modal('hide');
+                        $('#otpEmail')
+                            .text(response.email);
+                        $('#otp_email')
+                            .val(response.email);
+                        $('#otp')
+                            .val('');
+                        $('#otpError')
+                            .hide()
+                            .text('');
+                        $('#otpModal').modal('show');
+                        startOtpTimer();
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(
+                                response.message
+                            );
+                        }
+                    }
+                },
+
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        let errors =
+                            xhr.responseJSON.errors;
+                        $.each(
+                            errors,
+                            function (field, messages) {
+                                if (
+                                    typeof toastr !==
+                                    'undefined'
+                                ) {
+                                    toastr.error(
+                                        messages[0]
+                                    );
+                                }
+                            }
+                        );
+                    } else {
+                        let message =
+                            xhr.responseJSON?.message ??
+                            'Something went wrong. Please try again.';
+                        if (
+                            typeof toastr !== 'undefined'
+                        ) {
+                            toastr.error(message);
+                        } else {
+                            alert(message);
+                        }
+                    }
+                },
+
+                complete: function () {
+                    $('#driverRegisterButton')
+                        .prop('disabled', false)
+                        .text('Sign Up');
+
+                }
+            });
+        });
+    });
 </script>

@@ -119,69 +119,101 @@ class AuthController extends Controller
 
     public function driver_registration(Request $request){
 
-        session()->flash('open_modal', 'driverModal');
-
         $request->validate([
             'driver_first_name' => 'required|string|max:100',
-            'driver_last_name'  => 'required|string|max:100',
-            'driver_email'      => 'required|email|max:255|unique:drivers,email',
-            'driver_phone'      => 'required|digits:10|unique:drivers,phone_number',
+            'driver_last_name' => 'required|string|max:100',
 
-            'driver_country_id'  => 'required|exists:countries,id',
-            'driver_state_id'    => 'required|exists:states,id',
-            'driver_district_id' => 'required|exists:districts,id',
-            'driver_city_id'     => 'required|exists:cities,id',
-            'driver_area_id'     => 'required|exists:areas,id',
-        ],
-        [
+            'driver_email' => [
+                'required',
+                'email',
+                'max:255',
+                'unique:external_users,email',
+                'unique:users,email',
+            ],
+
+            'driver_phone' => [
+                'required',
+                'digits:10',
+                'unique:external_users,phone_number',
+                'unique:users,phone_number',
+            ],
+
+        ], [
+
             'driver_first_name.required' => 'First name is required.',
-            'driver_last_name.required'  => 'Last name is required.',
-            'driver_email.required'      => 'Email is required.',
-            'driver_email.email'         => 'Enter a valid email.',
-            'driver_phone.unique'        => 'Email is already registered.',
-            'driver_phone.required'      => 'Phone number is required.',
-            'driver_phone.digits'        => 'Phone number must be 10 digits.',
-            'driver_phone.unique'        => 'Phone number is already registered.',
-            'driver_country_id.required' => 'Please select a country.',
-            'driver_state_id.required'   => 'Please select a state.',
-            'driver_district_id.required'=> 'Please select a district.',
-            'driver_city_id.required'    => 'Please select a city.',
-            'driver_area_id.required'    => 'Please select an area.',
+            'driver_last_name.required' => 'Last name is required.',
+
+            'driver_email.required' => 'Email is required.',
+            'driver_email.email' => 'Enter a valid email.',
+            'driver_email.unique' => 'Email is already registered.',
+
+            'driver_phone.required' => 'Phone number is required.',
+            'driver_phone.digits' => 'Phone number must be 10 digits.',
+            'driver_phone.unique' => 'Phone number is already registered.',
+
         ]);
 
-        try {
+        // try {
 
-            $areaManagerId = AreaManager::where('country_id',$request->driver_country_id)
-                    ->where('state_id',$request->driver_state_id)
-                    ->where('district_id',$request->driver_district_id)
-                    ->where('city_id',$request->driver_city_id)
-                    ->where('area_id',$request->driver_area_id)->value('id');
-
-            Driver::create([
-                'first_name'    => $request->driver_first_name,
-                'last_name'     => $request->driver_last_name,
-                'email'         => $request->driver_email,
-                'phone_number'  => $request->driver_phone,
-
-                'country_id'    => $request->driver_country_id,
-                'state_id'      => $request->driver_state_id,
-                'district_id'   => $request->driver_district_id,
-                'city_id'       => $request->driver_city_id,
-                'area_id'       => $request->driver_area_id,
-                'area_manager_id'       => $areaManagerId,
-                'status'        => 0,
-            ]);
-
-            return redirect()->back()->with(
-                'success',
-                'Registration completed successfully.'
+            $otp = (string) random_int(
+                100000,
+                999999
             );
 
-        } catch (\Throwable $th) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Something went wrong. Please try again.');
-        }
+            DB::transaction(function () use ($otp, $request) {
+
+                $fullName = collect([
+                    $request->driver_first_name,
+                    $request->driver_last_name,
+                ])->filter()->implode(' ');
+
+                ExternalUser::create([
+                    'first_name'   => $request->driver_first_name,
+                    'last_name'    => $request->driver_last_name,
+                    'email'        => $request->driver_email,
+                    'phone_number' => $request->driver_phone,
+                    'user_type'    => 'driver',
+                    'status'       => 0,
+                    'otp'            =>Hash::make($otp),
+                    'otp_expires_at' =>now()->addMinutes(5),
+                    'otp_attempts'   => 0,
+                ]);
+
+            });
+
+
+            try {
+
+                Mail::to($request->driver_email)
+                    ->send(
+                        new SignupOtpMail($otp)
+                    );
+
+            } catch (\Throwable $e) {
+
+                return response()->json([
+                    'status' => false,
+                    'message' =>
+                        'Unable to send OTP email. Please try again.',
+                ], 500);
+            }
+
+
+            return response()->json([
+                'status' => true,
+                'message' => 'OTP has been sent to your email address.',
+                'email' => $request->driver_email,
+            ]);
+
+
+        // } catch (\Throwable $th) {
+
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' =>
+        //             'Something went wrong. Please try again.',
+        //     ], 500);
+        // }
     }
 
 
