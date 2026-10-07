@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
-class AreaManagerAuthController extends Controller
+class CarOwnerAuthController extends Controller
 {
     public function dashboard(){
-
-        $user = auth('web')->user();
-
         $countries = Country::orderBy('country_name')->get();
-
-        return view('Manager-Dashboard.dashboard', compact('countries'));
+        return view('CarOwner-Dashboard.dashboard', compact('countries'));
     }
 }

@@ -731,18 +731,17 @@ class UserAuthController extends Controller
             case 'area_manager':
                 return route('manager.dashboard');
 
-            // case 'driver':
-            //     return route('driver.dashboard');
+            case 'driver':
+                return route('driver.dashboard');
 
-            // case 'car_owner':
-            //     return route('carowner.dashboard');
+            case 'car_owner':
+                return route('car_owner.dashboard');
 
             case 'user':
             default:
                 return route('user.dashboard');
         }
     }
-
 
     public function dashboard(){
         return view('User-Dashboard.dashboard');

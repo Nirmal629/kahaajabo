@@ -30,6 +30,12 @@ class User extends Authenticatable
         'password',
         'registration_date',
         'user_type',
+        'country_id',
+        'state_id',
+        'district_id',
+        'city_id',
+        'area_id',
+        'profile_completed',
     ];
 
     /**
@@ -52,6 +58,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'profile_completed' => 'boolean',
         ];
     }
 }

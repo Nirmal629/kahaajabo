@@ -25,6 +25,8 @@ use App\Http\Controllers\Frontend\UserAuthController;
 use App\Http\Controllers\Frontend\ContactEnquiryController;
 use App\Http\Controllers\Frontend\AreaManagerAuthController;
 use App\Http\Controllers\Frontend\DriverAuthController;
+use App\Http\Controllers\Frontend\CarOwnerAuthController;
+use App\Http\Controllers\Frontend\ProfileCompletionController;
 
 use Illuminate\Support\Facades\DB;
 
@@ -35,6 +37,7 @@ Route::post('/verify-otp',[AuthController::class, 'verify_otp'])->name('verify.o
 Route::post('/resend-otp',[AuthController::class, 'resend_otp'])->name('resend.otp');
 
 Route::post('/driver-register', [AuthController::class, 'driver_registration'])->name('driver.register');
+Route::post('/car-owner-register', [AuthController::class, 'car_owner_registration'])->name('carOwner.register');
 
 Route::post('/request-call-enquiry', [ContactEnquiryController::class, 'call_enquiry'])->name('requestCall.enquiry.store');
 Route::post('/request-contact-enquiry', [ContactEnquiryController::class, 'contact_enquiry'])->name('contact.enquiry.store');
@@ -62,19 +65,27 @@ Route::post('/login/resend-otp', [UserAuthController::class, 'resendLoginOtp'])-
 
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/logout',[UserAuthController::class, 'logout'])->name('logout');
+
+    Route::get('/complete-profile', [ProfileCompletionController::class, 'show'])->name('profile.complete');
+
+    Route::post('/complete-profile', [ProfileCompletionController::class, 'update'])->name('profile.complete.update');
 });
 
 
 Route::middleware(['auth:web','user.type:user'])->prefix('user')->name('user.')->group(function () {
 
     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
+    
 
 });
-
 
 Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')->name('manager.')->group(function () {
 
     Route::get('/dashboard',[AreaManagerAuthController::class, 'dashboard'])->name('dashboard');
+
+    Route::middleware('profile.completed')->group(function () {
+
+    });
 
 });
 
@@ -84,11 +95,11 @@ Route::middleware(['auth','user.type:driver'])->prefix('driver')->name('driver.'
 
 });
 
-// Route::middleware(['auth','user.type:car_owner'])->prefix('car-owner')->name('car_owner.')->group(function () {
+Route::middleware(['auth','user.type:car_owner'])->prefix('car-owner')->name('car_owner.')->group(function () {
 
-//     Route::get('/dashboard',[CarOwnerController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard',[CarOwnerAuthController::class, 'dashboard'])->name('dashboard');
 
-// });
+});
 
 
 

@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class DriverAuthController extends Controller
 {
     public function dashboard(){
-        return view('Driver.dashboard');
+        return view('Driver-Dashboard.dashboard');
     }
 }

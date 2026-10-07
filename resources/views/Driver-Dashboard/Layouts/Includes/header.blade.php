@@ -6,7 +6,7 @@
         <li class="nav-item dropdown">
             <a class=" dropdown-toggle profile-dp" id="navbardrop" data-toggle="dropdown" href="/">
                 <img src="{{asset('public/Frontend/Assets/images/image1.jpg')}}" alt="profile-pic" class="img-fluid mr-2">
-                {{ Auth::user()->name }}
+                John Doe
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="/my-profile"><i
@@ -18,6 +18,7 @@
         </li>
     </ul>
 </nav> 
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 

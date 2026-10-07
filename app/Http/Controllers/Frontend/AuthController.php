@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -22,198 +23,398 @@ class AuthController extends Controller
 
         $request->validate([
             'partner_first_name' => 'required|string|max:100',
-            'partner_last_name' => 'required|string|max:100',
+            'partner_last_name'  => 'required|string|max:100',
 
             'partner_email' => [
                 'required',
                 'email',
                 'max:255',
-                'unique:external_users,email',
-                'unique:users,email',
+                Rule::unique('external_users', 'email')
+                    ->where(function ($query) {
+                        $query->where('otp_verified_status', 1);
+                    }),
+                Rule::unique('users', 'email'),
             ],
 
             'partner_phone' => [
                 'required',
                 'digits:10',
-                'unique:external_users,phone_number',
-                'unique:users,phone_number',
+                Rule::unique('external_users', 'phone_number')
+                    ->where(function ($query) {
+                        $query->where('otp_verified_status', 1);
+                    }),
+                Rule::unique('users', 'phone_number'),
             ],
 
         ], [
 
             'partner_first_name.required' => 'First name is required.',
-            'partner_last_name.required' => 'Last name is required.',
+            'partner_last_name.required'  => 'Last name is required.',
 
             'partner_email.required' => 'Email is required.',
-            'partner_email.email' => 'Enter a valid email.',
-            'partner_email.unique' => 'Email is already registered.',
+            'partner_email.email'    => 'Enter a valid email.',
+            'partner_email.unique'   => 'Email is already registered.',
 
             'partner_phone.required' => 'Phone number is required.',
-            'partner_phone.digits' => 'Phone number must be 10 digits.',
-            'partner_phone.unique' => 'Phone number is already registered.',
-
+            'partner_phone.digits'   => 'Phone number must be 10 digits.',
+            'partner_phone.unique'   => 'Phone number is already registered.',
         ]);
 
-        // try {
+        $otp = (string) random_int(100000, 999999);
 
-            $otp = (string) random_int(
-                100000,
-                999999
-            );
+        $externalUser = null;
 
-            DB::transaction(function () use ($otp, $request) {
+        try {
 
-                $fullName = collect([
-                    $request->partner_first_name,
-                    $request->partner_last_name,
-                ])->filter()->implode(' ');
+            $externalUser = DB::transaction(function () use ($request, $otp) {
 
-                ExternalUser::create([
-                    'first_name'   => $request->partner_first_name,
-                    'last_name'    => $request->partner_last_name,
-                    'email'        => $request->partner_email,
-                    'phone_number' => $request->partner_phone,
-                    'user_type'    => 'area_manager',
-                    'status'       => 0,
-                    'otp'            =>Hash::make($otp),
-                    'otp_expires_at' =>now()->addMinutes(5),
+                $existingUser = ExternalUser::where('email', $request->partner_email)
+                    ->where('otp_verified_status', 0)
+                    ->first();
+
+
+                if ($existingUser) {
+
+                    $existingUser->update([
+                        'first_name'     => $request->partner_first_name,
+                        'last_name'      => $request->partner_last_name,
+                        'phone_number'   => $request->partner_phone,
+                        'user_type'      => 'area_manager',
+                        'otp'            => Hash::make($otp),
+                        'otp_expires_at' => now()->addMinutes(5),
+                        'otp_attempts'   => 0,
+                    ]);
+
+                    return $existingUser;
+                }
+
+                return ExternalUser::create([
+                    'first_name'     => $request->partner_first_name,
+                    'last_name'      => $request->partner_last_name,
+                    'email'          => $request->partner_email,
+                    'phone_number'   => $request->partner_phone,
+                    'user_type'      => 'area_manager',
+                    'status'         => 0,
+                    'otp_verified_status'         => 0,
+                    'otp'            => Hash::make($otp),
+                    'otp_expires_at' => now()->addMinutes(5),
                     'otp_attempts'   => 0,
                 ]);
-
             });
 
+            Mail::to($request->partner_email)
+                ->send(
+                    new SignupOtpMail($otp)
+                );
 
-            try {
 
-                Mail::to($request->partner_email)
-                    ->send(
-                        new SignupOtpMail($otp)
+        } catch (\Throwable $e) {
+
+            if ($externalUser) {
+
+                try {
+
+                    $externalUser->delete();
+
+                } catch (\Throwable $deleteException) {
+
+                    Log::error(
+                        'Failed to delete temporary registration',
+                        [
+                            'email' => $request->partner_email,
+                            'error' => $deleteException->getMessage(),
+                        ]
                     );
-
-            } catch (\Throwable $e) {
-
-                return response()->json([
-                    'status' => false,
-                    'message' =>
-                        'Unable to send OTP email. Please try again.',
-                ], 500);
+                }
             }
 
+            Log::error(
+                'Signup OTP email failed',
+                [
+                    'email' => $request->partner_email,
+                    'error' => $e->getMessage(),
+                ]
+            );
 
             return response()->json([
-                'status' => true,
-                'message' => 'OTP has been sent to your email address.',
-                'email' => $request->partner_email,
-            ]);
+                'status' => false,
+                'message' =>
+                    'Unable to send OTP to your email. '
+                    . 'Registration could not be completed. '
+                    . 'Please try again.',
+            ], 500);
+        }
 
-
-        // } catch (\Throwable $th) {
-
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' =>
-        //             'Something went wrong. Please try again.',
-        //     ], 500);
-        // }
+        return response()->json([
+            'status'  => true,
+            'message' => 'OTP has been sent to your email address.',
+            'email'   => $request->partner_email,
+        ]);
     }
 
     public function driver_registration(Request $request){
 
-        $request->validate([
+           $request->validate([
             'driver_first_name' => 'required|string|max:100',
-            'driver_last_name' => 'required|string|max:100',
+            'driver_last_name'  => 'required|string|max:100',
 
             'driver_email' => [
                 'required',
                 'email',
                 'max:255',
-                'unique:external_users,email',
-                'unique:users,email',
+                Rule::unique('external_users', 'email')
+                    ->where(function ($query) {
+                        $query->where('otp_verified_status', 1);
+                    }),
+                Rule::unique('users', 'email'),
             ],
 
             'driver_phone' => [
                 'required',
                 'digits:10',
-                'unique:external_users,phone_number',
-                'unique:users,phone_number',
+                Rule::unique('external_users', 'phone_number')
+                    ->where(function ($query) {
+                        $query->where('otp_verified_status', 1);
+                    }),
+                Rule::unique('users', 'phone_number'),
             ],
 
         ], [
 
             'driver_first_name.required' => 'First name is required.',
-            'driver_last_name.required' => 'Last name is required.',
+            'driver_last_name.required'  => 'Last name is required.',
 
             'driver_email.required' => 'Email is required.',
-            'driver_email.email' => 'Enter a valid email.',
-            'driver_email.unique' => 'Email is already registered.',
+            'driver_email.email'    => 'Enter a valid email.',
+            'driver_email.unique'   => 'Email is already registered.',
 
             'driver_phone.required' => 'Phone number is required.',
-            'driver_phone.digits' => 'Phone number must be 10 digits.',
-            'driver_phone.unique' => 'Phone number is already registered.',
-
+            'driver_phone.digits'   => 'Phone number must be 10 digits.',
+            'driver_phone.unique'   => 'Phone number is already registered.',
         ]);
 
-        // try {
+        $otp = (string) random_int(100000, 999999);
 
-            $otp = (string) random_int(
-                100000,
-                999999
-            );
+        $externalUser = null;
 
-            DB::transaction(function () use ($otp, $request) {
+        try {
 
-                $fullName = collect([
-                    $request->driver_first_name,
-                    $request->driver_last_name,
-                ])->filter()->implode(' ');
+            $externalUser = DB::transaction(function () use ($request, $otp) {
 
-                ExternalUser::create([
-                    'first_name'   => $request->driver_first_name,
-                    'last_name'    => $request->driver_last_name,
-                    'email'        => $request->driver_email,
-                    'phone_number' => $request->driver_phone,
-                    'user_type'    => 'driver',
-                    'status'       => 0,
-                    'otp'            =>Hash::make($otp),
-                    'otp_expires_at' =>now()->addMinutes(5),
-                    'otp_attempts'   => 0,
+                $existingUser = ExternalUser::where('email', $request->driver_email)
+                    ->where('otp_verified_status', 0)
+                    ->first();
+
+
+                if ($existingUser) {
+
+                    $existingUser->update([
+                        'first_name'     => $request->driver_first_name,
+                        'last_name'      => $request->driver_last_name,
+                        'phone_number'   => $request->driver_phone,
+                        'user_type'      => 'driver',
+                        'otp'            => Hash::make($otp),
+                        'otp_expires_at' => now()->addMinutes(5),
+                        'otp_attempts'   => 0,
+                    ]);
+
+                    return $existingUser;
+                }
+
+                return ExternalUser::create([
+                    'first_name'        => $request->driver_first_name,
+                    'last_name'         => $request->driver_last_name,
+                    'email'             => $request->driver_email,
+                    'phone_number'      => $request->driver_phone,
+                    'user_type'         => 'driver',
+                    'status'            => 0,
+                    'otp_verified_status'  => 0,
+                    'otp'               => Hash::make($otp),
+                    'otp_expires_at'    => now()->addMinutes(5),
+                    'otp_attempts'      => 0,
                 ]);
-
             });
 
+            Mail::to($request->driver_email)
+                ->send(
+                    new SignupOtpMail($otp)
+                );
 
-            try {
 
-                Mail::to($request->driver_email)
-                    ->send(
-                        new SignupOtpMail($otp)
+        } catch (\Throwable $e) {
+
+            if ($externalUser) {
+
+                try {
+
+                    $externalUser->delete();
+
+                } catch (\Throwable $deleteException) {
+
+                    Log::error(
+                        'Failed to delete temporary registration',
+                        [
+                            'email' => $request->driver_email,
+                            'error' => $deleteException->getMessage(),
+                        ]
                     );
-
-            } catch (\Throwable $e) {
-
-                return response()->json([
-                    'status' => false,
-                    'message' =>
-                        'Unable to send OTP email. Please try again.',
-                ], 500);
+                }
             }
 
+            Log::error(
+                'Signup OTP email failed',
+                [
+                    'email' => $request->driver_email,
+                    'error' => $e->getMessage(),
+                ]
+            );
 
             return response()->json([
-                'status' => true,
-                'message' => 'OTP has been sent to your email address.',
-                'email' => $request->driver_email,
-            ]);
+                'status' => false,
+                'message' =>
+                    'Unable to send OTP to your email. '
+                    . 'Registration could not be completed. '
+                    . 'Please try again.',
+            ], 500);
+        }
+        return response()->json([
+            'status'  => true,
+            'message' => 'OTP has been sent to your email address.',
+            'email'   => $request->driver_email,
+        ]);
+    }
 
 
-        // } catch (\Throwable $th) {
+    public function car_owner_registration(Request $request){
 
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' =>
-        //             'Something went wrong. Please try again.',
-        //     ], 500);
-        // }
+        $request->validate([
+            'carOwner_first_name' => 'required|string|max:100',
+            'carOwner_last_name'  => 'required|string|max:100',
+
+            'carOwner_email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('external_users', 'email')
+                    ->where(function ($query) {
+                        $query->where('otp_verified_status', 1);
+                    }),
+                Rule::unique('users', 'email'),
+            ],
+
+            'carOwner_phone' => [
+                'required',
+                'digits:10',
+                Rule::unique('external_users', 'phone_number')
+                    ->where(function ($query) {
+                        $query->where('otp_verified_status', 1);
+                    }),
+                Rule::unique('users', 'phone_number'),
+            ],
+
+        ], [
+
+            'carOwner_first_name.required' => 'First name is required.',
+            'carOwner_last_name.required'  => 'Last name is required.',
+
+            'carOwner_email.required' => 'Email is required.',
+            'carOwner_email.email'    => 'Enter a valid email.',
+            'carOwner_email.unique'   => 'Email is already registered.',
+
+            'carOwner_phone.required' => 'Phone number is required.',
+            'carOwner_phone.digits'   => 'Phone number must be 10 digits.',
+            'carOwner_phone.unique'   => 'Phone number is already registered.',
+        ]);
+
+        $otp = (string) random_int(100000, 999999);
+
+        $externalUser = null;
+
+        try {
+
+            $externalUser = DB::transaction(function () use ($request, $otp) {
+
+                $existingUser = ExternalUser::where('email', $request->carOwner_email)
+                    ->where('otp_verified_status', 0)
+                    ->first();
+
+
+                if ($existingUser) {
+
+                    $existingUser->update([
+                        'first_name'     => $request->carOwner_first_name,
+                        'last_name'      => $request->carOwner_last_name,
+                        'phone_number'   => $request->carOwner_phone,
+                        'user_type'      => 'car_owner',
+                        'otp'            => Hash::make($otp),
+                        'otp_expires_at' => now()->addMinutes(5),
+                        'otp_attempts'   => 0,
+                    ]);
+
+                    return $existingUser;
+                }
+
+                return ExternalUser::create([
+                    'first_name'        => $request->carOwner_first_name,
+                    'last_name'         => $request->carOwner_last_name,
+                    'email'             => $request->carOwner_email,
+                    'phone_number'      => $request->carOwner_phone,
+                    'user_type'         => 'car_owner',
+                    'status'            => 0,
+                    'otp_verified_status'  => 0,
+                    'otp'               => Hash::make($otp),
+                    'otp_expires_at'    => now()->addMinutes(5),
+                    'otp_attempts'      => 0,
+                ]);
+            });
+
+            Mail::to($request->carOwner_email)
+                ->send(
+                    new SignupOtpMail($otp)
+                );
+
+
+        } catch (\Throwable $e) {
+
+            if ($externalUser) {
+
+                try {
+
+                    $externalUser->delete();
+
+                } catch (\Throwable $deleteException) {
+
+                    Log::error(
+                        'Failed to delete temporary registration',
+                        [
+                            'email' => $request->carOwner_email,
+                            'error' => $deleteException->getMessage(),
+                        ]
+                    );
+                }
+            }
+
+            Log::error(
+                'Signup OTP email failed',
+                [
+                    'email' => $request->carOwner_email,
+                    'error' => $e->getMessage(),
+                ]
+            );
+
+            return response()->json([
+                'status' => false,
+                'message' =>
+                    'Unable to send OTP to your email. '
+                    . 'Registration could not be completed. '
+                    . 'Please try again.',
+            ], 500);
+        }
+        return response()->json([
+            'status'  => true,
+            'message' => 'OTP has been sent to your email address.',
+            'email'   => $request->carOwner_email,
+        ]);
     }
 
 
@@ -314,6 +515,7 @@ class AuthController extends Controller
 
             $externalUser->update([
                 'status' => 1,
+                'otp_verified_status' => 1,
                 'otp' => null,
                 'otp_expires_at' => null,
                 'otp_attempts' => 0,
@@ -406,27 +608,18 @@ class AuthController extends Controller
         switch ($userType) {
 
             case 'user':
-
                 return route('user.dashboard');
 
-
             case 'area_manager':
-
                 return route('manager.dashboard');
 
+            case 'driver':
+                return route('driver.dashboard');
 
-            // case 'driver':
-
-            //     return route('driver.dashboard');
-
-
-            // case 'car_owner':
-
-            //     return route('car_owner.dashboard');
-
+            case 'car_owner':
+                return route('car_owner.dashboard');
 
             default:
-
                 return route('home.index');
         }
     }
