@@ -30,15 +30,32 @@
     <!-- Core Style Css -->
     <link rel="stylesheet" href="{{asset('Frontend/Assets/css/style.css')}}" />
      <link rel="stylesheet" href="https://cdn.datatables.net/3.0.2/css/dataTables.bootstrap4.min.css" />
+
+     <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <style>
+        #toast-container {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 999999 !important;
+        }
+
+        #toast-container > .toast {
+            opacity: 1 !important;
+            /* display: block !important; */
+        }
+    </style>
 </head>
 
 <body>
 
     
     <div class="main d-flex">
-        @include('Driver-Dashboard.Layouts.Includes.sidebar')
+        @include('CarOwner-Dashboard.Layouts.Includes.sidebar')
         <div class="dashboard-content">
-            @include('Driver-Dashboard.Layouts.Includes.header')
+            @include('CarOwner-Dashboard.Layouts.Includes.header')
             <main id="mainSection">
                 @yield('main-content')
             </main>
@@ -50,9 +67,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>

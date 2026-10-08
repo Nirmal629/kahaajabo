@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
-use App\Models\InternalUser;
+use App\Models\ExternalUser;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\District;
@@ -22,13 +22,13 @@ class AreaManagerController extends Controller
      */
     public function index()
     {
-        $managerData = InternalUser::select('internal_users.*', 'location_countries.country_name', 'location_states.name as state_name',
+        $managerData = ExternalUser::select('external_users.*', 'location_countries.country_name', 'location_states.name as state_name',
             'location_districts.district_name', 'location_cities.name as city_name', 'location_areas.area_name', 'location_areas.pincode')
-            ->leftjoin('location_countries', 'location_countries.id', 'internal_users.country_id')
-            ->leftjoin('location_states', 'location_states.id', 'internal_users.state_id')
-            ->leftjoin('location_districts', 'location_districts.id', 'internal_users.district_id')
-            ->leftjoin('location_cities', 'location_cities.id', 'internal_users.city_id')
-            ->leftjoin('location_areas', 'location_areas.id', 'internal_users.area_id')
+            ->leftjoin('location_countries', 'location_countries.id', 'external_users.country_id')
+            ->leftjoin('location_states', 'location_states.id', 'external_users.state_id')
+            ->leftjoin('location_districts', 'location_districts.id', 'external_users.district_id')
+            ->leftjoin('location_cities', 'location_cities.id', 'external_users.city_id')
+            ->leftjoin('location_areas', 'location_areas.id', 'external_users.area_id')
             ->get();
 
         return view('Admin.AreaManager.index', compact('managerData'));
@@ -56,7 +56,7 @@ class AreaManagerController extends Controller
     public function show(string $id)
     {
         $areaManager = AreaManager::select(
-            'internal_users.*',
+            'external_users.*',
             'location_countries.country_name',
             'location_states.name as state_name',
             'location_districts.district_name',
@@ -64,11 +64,11 @@ class AreaManagerController extends Controller
             'location_areas.area_name',
             'location_areas.pincode'
         )
-        ->leftJoin('location_countries','location_countries.id','=','internal_users.country_id')
-        ->leftJoin('location_states','location_states.id','=','internal_users.state_id')
-        ->leftJoin('location_districts','location_districts.id','=','internal_users.district_id')
-        ->leftJoin('location_cities','location_cities.id','=','internal_users.city_id')
-        ->leftJoin('location_areas','location_areas.id','=','internal_users.area_id')
+        ->leftJoin('location_countries','location_countries.id','=','external_users.country_id')
+        ->leftJoin('location_states','location_states.id','=','external_users.state_id')
+        ->leftJoin('location_districts','location_districts.id','=','external_users.district_id')
+        ->leftJoin('location_cities','location_cities.id','=','external_users.city_id')
+        ->leftJoin('location_areas','location_areas.id','=','external_users.area_id')
         ->findOrFail($id);
 
         $getCar_owner = CarOwner::where('area_manager_id', $id)
@@ -131,7 +131,7 @@ class AreaManagerController extends Controller
      */
     public function edit(string $id)
     {
-        $area_manager = InternalUser::findOrFail($id);
+        $area_manager = ExternalUser::findOrFail($id);
 
         $countries = Country::orderBy('country_name')
             ->get();
@@ -187,7 +187,7 @@ class AreaManagerController extends Controller
             'driving_license_file' => 'nullable|mimes:jpg,jpeg,png,pdf|max:5120',
         ]);
 
-        $areaManager = InternalUser::findOrFail($id);
+        $areaManager = ExternalUser::findOrFail($id);
 
         // Upload Folder
         $path = public_path('uploads/area-manager/');
@@ -287,7 +287,7 @@ class AreaManagerController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = InternalUser::find($id);
+        $data = ExternalUser::find($id);
         $data->delete();
 
         return redirect()->route('admin.area-manager.index')->with('error', 'Area Manager Details deleted successfully.');
@@ -296,7 +296,7 @@ class AreaManagerController extends Controller
     public function areaManager_update_status(Request $request)
     {
 
-        $areaManager_details = InternalUser::find($request->id);
+        $areaManager_details = ExternalUser::find($request->id);
 
         if ($areaManager_details) {
             $areaManager_details->status = $request->status;

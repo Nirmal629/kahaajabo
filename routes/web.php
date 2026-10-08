@@ -97,7 +97,7 @@ Route::middleware(['auth','user.type:driver'])->prefix('driver')->name('driver.'
 
 Route::middleware(['auth','user.type:car_owner'])->prefix('car-owner')->name('car_owner.')->group(function () {
 
-    Route::get('/dashboard',[CarOwnerAuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [CarOwnerAuthController::class, 'dashboard'])->name('dashboard');
 
 });
 

@@ -37,7 +37,8 @@ class ProfileCompletionController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'country_id' => ['required',
+            'country_id' => [
+                'required',
                 'integer',
                 'exists:location_countries,id',
             ],
@@ -82,7 +83,6 @@ class ProfileCompletionController extends Controller
             'area_id.exists' => 'Please select a valid area.',
         ]);
 
-
         $user = Auth::guard('web')->user();
 
         if (!$user) {
@@ -92,7 +92,38 @@ class ProfileCompletionController extends Controller
             ], 401);
         }
 
-        if($user->user_type == 'user'){
+        $externalUser = ExternalUser::where('email', $user->email)->first();
+
+        if (!$externalUser) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Area manager profile not found.',
+            ], 404);
+        }
+
+        if ($user->user_type === 'area_manager') {
+
+            $areaAlreadyAssigned = ExternalUser::where('user_type', 'area_manager')
+                ->where('area_id', $request->area_id)
+                ->where('id', '!=', $externalUser->id)
+                ->exists();
+
+            if ($areaAlreadyAssigned) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'This area already has an area manager. Please select another area.',
+                    'errors' => [
+                        'area_id' => [
+                            'This area is already assigned to another area manager.'
+                        ]
+                    ]
+                ], 422);
+            }
+
+        } 
+        
+        if($user->user_type === 'user'){
+
             $user->country_id = $request->country_id;
             $user->state_id = $request->state_id;
             $user->district_id = $request->district_id;
@@ -101,27 +132,25 @@ class ProfileCompletionController extends Controller
             $user->profile_completed = true;
 
             $user->save();
-        }else{
+        } else {
+            
+            $externalUser->country_id = $request->country_id;
+            $externalUser->state_id = $request->state_id;
+            $externalUser->district_id = $request->district_id;
+            $externalUser->city_id = $request->city_id;
+            $externalUser->area_id = $request->area_id;
+            $externalUser->profile_completed = true;
 
-            $get_externalUser = ExternalUser::where('email', $user->email)->first();
+            $externalUser->save();
 
-            $get_externalUser->country_id = $request->country_id;
-            $get_externalUser->state_id = $request->state_id;
-            $get_externalUser->district_id = $request->district_id;
-            $get_externalUser->city_id = $request->city_id;
-            $get_externalUser->area_id = $request->area_id;
-            $get_externalUser->profile_completed = true;
+            $user->country_id = $request->country_id;
+            $user->state_id = $request->state_id;
+            $user->district_id = $request->district_id;
+            $user->city_id = $request->city_id;
+            $user->area_id = $request->area_id;
+            $user->profile_completed = true;
 
-            if($get_externalUser->save()){
-                $user->country_id = $request->country_id;
-                $user->state_id = $request->state_id;
-                $user->district_id = $request->district_id;
-                $user->city_id = $request->city_id;
-                $user->area_id = $request->area_id;
-                $user->profile_completed = true;
-
-                $user->save();
-            }
+            $user->save();
         }
 
         $dashboardRoute = $this->getDashboardRoute($user);
@@ -129,14 +158,13 @@ class ProfileCompletionController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Profile completed successfully.',
-            'redirect' => route($dashboardRoute),
+            'redirect' => $dashboardRoute,
         ]);
     }
 
     private function getDashboardRoute($user)
     {
         switch ($user->user_type) {
-
             case 'area_manager':
                 return route('manager.dashboard');
 

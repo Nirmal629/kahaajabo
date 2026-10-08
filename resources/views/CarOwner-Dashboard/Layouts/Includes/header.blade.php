@@ -23,196 +23,193 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 @if(Auth::guard('web')->check() && !Auth::guard('web')->user()->profile_completed)
+    <div class="modal fade"
+        id="mandatoryProfileModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        data-backdrop="static"
+        data-keyboard="false">
 
-<div class="modal fade"
-     id="mandatoryProfileModal"
-     tabindex="-1"
-     role="dialog"
-     aria-hidden="true"
-     data-backdrop="static"
-     data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
 
-    <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-        <div class="modal-content">
+                <div class="modal-header">
 
-            <div class="modal-header">
+                    <h5 class="modal-title">
+                        Complete Your Profile
+                    </h5>
 
-                <h5 class="modal-title">
-                    Complete Your Profile
-                </h5>
-
-            </div>
-
-
-            <div class="modal-body">
-
-                <p class="mb-4">
-                    Please complete your location details
-                    to continue.
-                </p>
+                </div>
 
 
-                <form id="mandatoryProfileForm">
+                <div class="modal-body">
 
-                    @csrf
+                    <p class="mb-4">
+                        Please complete your location details
+                        to continue.
+                    </p>
 
 
-                    {{-- Country --}}
+                    <form id="mandatoryProfileForm">
 
-                    <div class="form-group mb-3">
+                        @csrf
 
-                        <label>
-                            Country
-                            <span class="text-danger">*</span>
-                        </label>
 
-                        <select
-                            name="country_id"
-                            class="form-control location-country"
-                            required>
+                        {{-- Country --}}
 
-                            <option value="">
-                                Choose Country
-                            </option>
+                        <div class="form-group mb-3">
 
-                            @foreach($countries as $country)
+                            <label>
+                                Country
+                                <span class="text-danger">*</span>
+                            </label>
 
-                                <option value="{{ $country->id }}">
-                                    {{ $country->country_name }}
+                            <select
+                                name="country_id"
+                                class="form-control location-country"
+                                required>
+
+                                <option value="">
+                                    Choose Country
                                 </option>
 
-                            @endforeach
+                                @foreach($countries as $country)
 
-                        </select>
+                                    <option value="{{ $country->id }}">
+                                        {{ $country->country_name }}
+                                    </option>
 
-                    </div>
+                                @endforeach
 
+                            </select>
 
-                    {{-- State --}}
-
-                    <div class="form-group mb-3">
-
-                        <label>
-                            State
-                            <span class="text-danger">*</span>
-                        </label>
-
-                        <select
-                            name="state_id"
-                            class="form-control location-state"
-                            disabled
-                            required>
-
-                            <option value="">
-                                Choose State
-                            </option>
-
-                        </select>
-
-                    </div>
+                        </div>
 
 
-                    {{-- District --}}
+                        {{-- State --}}
 
-                    <div class="form-group mb-3">
+                        <div class="form-group mb-3">
 
-                        <label>
-                            District
-                            <span class="text-danger">*</span>
-                        </label>
+                            <label>
+                                State
+                                <span class="text-danger">*</span>
+                            </label>
 
-                        <select
-                            name="district_id"
-                            class="form-control location-district"
-                            disabled
-                            required>
+                            <select
+                                name="state_id"
+                                class="form-control location-state"
+                                disabled
+                                required>
 
-                            <option value="">
-                                Choose District
-                            </option>
+                                <option value="">
+                                    Choose State
+                                </option>
 
-                        </select>
+                            </select>
 
-                    </div>
-
-
-                    {{-- City --}}
-
-                    <div class="form-group mb-3">
-
-                        <label>
-                            City
-                            <span class="text-danger">*</span>
-                        </label>
-
-                        <select
-                            name="city_id"
-                            class="form-control location-city"
-                            disabled
-                            required>
-
-                            <option value="">
-                                Choose City
-                            </option>
-
-                        </select>
-
-                    </div>
+                        </div>
 
 
-                    {{-- Area --}}
+                        {{-- District --}}
 
-                    <div class="form-group mb-3">
+                        <div class="form-group mb-3">
 
-                        <label>
-                            Area
-                            <span class="text-danger">*</span>
-                        </label>
+                            <label>
+                                District
+                                <span class="text-danger">*</span>
+                            </label>
 
-                        <select
-                            name="area_id"
-                            class="form-control location-area"
-                            disabled
-                            required>
+                            <select
+                                name="district_id"
+                                class="form-control location-district"
+                                disabled
+                                required>
 
-                            <option value="">
-                                Choose Area
-                            </option>
+                                <option value="">
+                                    Choose District
+                                </option>
 
-                        </select>
+                            </select>
 
-                    </div>
-
-
-                    <div id="profileError"
-                         class="alert alert-danger d-none">
-                    </div>
+                        </div>
 
 
-                    <button
-                        type="submit"
-                        id="saveProfileBtn"
-                        class="btn btn-primary w-100">
+                        {{-- City --}}
 
-                        Save & Continue
+                        <div class="form-group mb-3">
 
-                    </button>
+                            <label>
+                                City
+                                <span class="text-danger">*</span>
+                            </label>
 
-                </form>
+                            <select
+                                name="city_id"
+                                class="form-control location-city"
+                                disabled
+                                required>
+
+                                <option value="">
+                                    Choose City
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        {{-- Area --}}
+
+                        <div class="form-group mb-3">
+
+                            <label>
+                                Area
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <select
+                                name="area_id"
+                                class="form-control location-area"
+                                disabled
+                                required>
+
+                                <option value="">
+                                    Choose Area
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div id="profileError"
+                            class="alert alert-danger d-none">
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            id="saveProfileBtn"
+                            class="btn btn-primary w-100">
+
+                            Save & Continue
+
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
         </div>
 
     </div>
-
-</div>
-
 @endif
 
 @if(Auth::guard('web')->check() && !Auth::guard('web')->user()->profile_completed)
-
 <script>
 
  $(document).ready(function() {
@@ -226,9 +223,7 @@
     $('#mandatoryProfileModal').on(
         'hide.bs.modal',
         function(e) {
-
             e.preventDefault();
-
             return false;
         }
     );
@@ -237,12 +232,9 @@
         'change',
         function()
         {
+            let form = $('#mandatoryProfileForm');
 
-            let form =
-                $('#mandatoryProfileForm');
-
-            let country_id =
-                $(this).val();
+            let country_id = $(this).val();
 
 
             form.find('.location-state')
@@ -442,6 +434,12 @@
                 type:"POST",
                 data:form.serialize(),
                 success: function(response) {
+
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success(
+                            response.message
+                        );
+                    }
                     if (response.status) {
                         window.location.href = response.redirect;
                     }
@@ -474,11 +472,8 @@
         }
     );
 });
-
 </script>
-
 @endif
-
 
 
 <script>

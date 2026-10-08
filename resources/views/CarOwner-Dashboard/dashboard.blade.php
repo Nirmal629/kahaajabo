@@ -1,4 +1,4 @@
-@extends('Driver-Dashboard.Layouts.App')
+@extends('CarOwner-Dashboard.Layouts.App')
 @section('main-content')
     <div class="">
         <div class="container-fluid">
