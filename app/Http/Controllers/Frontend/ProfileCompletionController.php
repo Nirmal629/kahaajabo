@@ -162,6 +162,73 @@ class ProfileCompletionController extends Controller
         ]);
     }
 
+    public function userProfileupdate(Request $request)
+    {
+        $request->validate([
+            'country_id' => [
+                'required',
+                'integer',
+                'exists:location_countries,id',
+            ],
+            'state_id' => [
+                'required',
+                'integer',
+                'exists:location_states,id',
+            ],
+            'district_id' => [
+                'required',
+                'integer',
+                'exists:location_districts,id',
+            ],
+            'city_id' => [
+                'required',
+                'integer',
+                'exists:location_cities,id',
+            ],
+        ], [
+            'country_id.required' => 'Please select your country.',
+            'country_id.exists' => 'Please select a valid country.',
+
+            'state_id.required' => 'Please select your state.',
+            'state_id.exists' => 'Please select a valid state.',
+
+            'district_id.required' => 'Please select your district.',
+            'district_id.exists' => 'Please select a valid district.',
+
+            'city_id.required' => 'Please select your city.',
+            'city_id.exists' => 'Please select a valid city.',
+        ]);
+
+        $user = Auth::guard('web')->user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User is not authenticated.',
+            ], 401);
+        }
+
+        if($user->user_type === 'user'){
+
+            $user->country_id = $request->country_id;
+            $user->state_id = $request->state_id;
+            $user->district_id = $request->district_id;
+            $user->city_id = $request->city_id;
+            $user->area_id = $request->area_id;
+            $user->profile_completed = true;
+
+            $user->save();
+        }
+
+        $dashboardRoute = $this->getDashboardRoute($user);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile completed successfully.',
+            'redirect' => $dashboardRoute,
+        ]);
+    }
+
     private function getDashboardRoute($user)
     {
         switch ($user->user_type) {

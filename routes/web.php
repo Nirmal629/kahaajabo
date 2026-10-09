@@ -69,12 +69,21 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/complete-profile', [ProfileCompletionController::class, 'show'])->name('profile.complete');
 
     Route::post('/complete-profile', [ProfileCompletionController::class, 'update'])->name('profile.complete.update');
+    Route::post('/user-complete-profile', [ProfileCompletionController::class, 'userProfileupdate'])->name('user-profile.complete.update');
 });
 
 
 Route::middleware(['auth:web','user.type:user'])->prefix('user')->name('user.')->group(function () {
 
     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
+
+    Route::middleware('profile.completed')->group(function () {
+        Route::get('/profile', [UserAuthController::class, 'profile'])->name('profile');
+        Route::put('/profile', [UserAuthController::class, 'update'])->name('profile.update');
+        Route::put('/password', [UserAuthController::class,'updatePassword'])->name('password.update');
+        Route::post('/profile/image', [UserAuthController::class,'updateImage'])->name('profile.image.update');
+    });
+    
     
 
 });

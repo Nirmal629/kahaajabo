@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -744,7 +745,8 @@ class UserAuthController extends Controller
     }
 
     public function dashboard(){
-        return view('User-Dashboard.dashboard');
+        $countries = Country::orderBy('country_name')->get();
+        return view('User-Dashboard.dashboard', compact('countries'));
     }
 
     public function logout(Request $request)
@@ -759,5 +761,9 @@ class UserAuthController extends Controller
 
         return redirect('/')
             ->with('success', 'Logged out successfully.');
+    }
+
+    public function profile(){
+        return view('User-Dashboard.profile');
     }
 }

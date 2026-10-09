@@ -51,7 +51,6 @@
 
 <body>
 
-    
     <div class="main d-flex">
         @include('CarOwner-Dashboard.Layouts.Includes.sidebar')
         <div class="dashboard-content">
@@ -61,7 +60,6 @@
             </main>
         </div>
     </div>
-
 
         <!-- jQuery-CDN----->
     <script src="https://code.jquery.com/jquery-3.7.1.js"

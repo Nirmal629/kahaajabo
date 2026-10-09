@@ -478,8 +478,6 @@
 
 @endif
 
-
-
 <script>
     function loadStates(form, country_id, selectedState = null) {
 
