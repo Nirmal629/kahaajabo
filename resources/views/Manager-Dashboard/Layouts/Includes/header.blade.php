@@ -441,6 +441,11 @@
                 type:"POST",
                 data:form.serialize(),
                 success: function(response) {
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success(
+                            response.message
+                        );
+                    }
                     if (response.status) {
                         window.location.href = response.redirect;
                     }

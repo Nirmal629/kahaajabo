@@ -6,6 +6,15 @@
                                                 class="fa-solid fa-bars-progress mr-2"></i>Rides</div>
                                 <div><i class="fa-solid fa-arrow-right"></i></div>
                         </a></li>
+                <li class="sidebar__nav-item">
+                        <a class="sidebar__nav-link" href="{{ route('manager.ride.cost.estimate') }}">
+                                <div class="d-flex align-items-center">
+                                        <i class="fa-solid fa-bars-progress mr-2"></i>Ride Cost Estimate
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+                </li>
+
                 <li class="sidebar__nav-item"><a class="sidebar__nav-link" href="manager-dashboard-carlist.php">
                                 <div class="d-flex align-items-center"><i class="fa-solid fa-car mr-2"></i>Car List
                                 </div>

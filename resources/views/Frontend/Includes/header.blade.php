@@ -738,7 +738,7 @@
 
 
                           {{-- ================= GOOGLE LOGIN ================= --}}
-                          <a href="" class="google-login-btn">
+                          <a href="{{ route('google.redirect') }}" class="google-login-btn">
 
                               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                                   alt="Google" class="google-icon">

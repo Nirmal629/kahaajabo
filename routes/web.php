@@ -22,11 +22,13 @@ use App\Http\Controllers\Admin\VehicleRateController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\UserAuthController;
+use App\Http\Controllers\Frontend\GoogleAuthController;
 use App\Http\Controllers\Frontend\ContactEnquiryController;
 use App\Http\Controllers\Frontend\AreaManagerAuthController;
 use App\Http\Controllers\Frontend\DriverAuthController;
 use App\Http\Controllers\Frontend\CarOwnerAuthController;
 use App\Http\Controllers\Frontend\ProfileCompletionController;
+use App\Http\Controllers\Frontend\ManagerRideCostController;
 
 use Illuminate\Support\Facades\DB;
 
@@ -53,6 +55,9 @@ Route::post('/login/verify-otp', [UserAuthController::class, 'verifyLoginOtp'])-
 Route::post('/login/resend-otp', [UserAuthController::class, 'resendLoginOtp'])->name('login.resend.otp');
  
 
+// Route::get('/google-login', [GoogleAuthController::class, 'googleLogin'])->name('google.login');
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
 // Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
 
@@ -94,6 +99,7 @@ Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')
 
     Route::middleware('profile.completed')->group(function () {
 
+        Route::get('/ride-cost-estimate', [ManagerRideCostController::class, 'ride_cost_list'])->name('ride.cost.estimate');
     });
 
 });
