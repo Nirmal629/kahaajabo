@@ -1110,9 +1110,12 @@ p.forget_password a {
     border-radius: 15px;
     box-shadow: 0px 1px 3px 1px rgb(0 0 0 / 15%);
     text-align: center;
+<<<<<<< HEAD
     display: flex;
     gap: 10px;
     justify-content: center;
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52
 }
 
 .ProfilepageTitle {
@@ -1124,14 +1127,20 @@ p.forget_password a {
 }
 
 .profile_img {
+<<<<<<< HEAD
     width: 75px;
     height: 75px;
+=======
+    width: 70px;
+    height: 70px;
+>>>>>>> 2780bd404788a863562981e078157944912acf52
     margin: 0 auto;
 }
 
 .profile_img img {
     border-radius: 50%;
 }
+<<<<<<< HEAD
 
 .DetailsData h4 {
     margin: 10px 0;
@@ -1139,10 +1148,18 @@ p.forget_password a {
 }
 
 .DetailsData h6 {
+=======
+.DetailsData h4{
+    margin: 10px 0;
+    font-size: 17px;
+}
+.DetailsData h6{
+>>>>>>> 2780bd404788a863562981e078157944912acf52
     color: var(--text-gray-color);
     font-size: 14px;
     margin-bottom: 20px;
 }
+<<<<<<< HEAD
 
 .DetailsData div {
     gap: 10px;
@@ -1174,10 +1191,27 @@ p.forget_password a {
 
 .user_form {
     background-color: var(--white-color);
+=======
+.DetailsData div{
+    gap: 10px;
+}
+.choose_image{
+    color: var(--blue-color);
+}
+.action_btn.upload{
+    background-color: var(--blue-color);
+}
+.action_btn.delete{
+    background-color: var(--text-denger);
+}
+.user_form{
+        background-color: var(--white-color);
+>>>>>>> 2780bd404788a863562981e078157944912acf52
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0px 1px 3px 1px rgb(0 0 0 / 15%);
 }
+<<<<<<< HEAD
 
 .user_form h4 {
     margin-bottom: 15px;
@@ -1364,6 +1398,30 @@ form span {
     .email-body h2 {
         font-size: 19px;
     }
+=======
+.user_form h4{
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+.user_form h4 i{
+    color: var(--blue-color);
+}
+.switchList, .switchList li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.switchList li {
+  padding: 10px 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px solid #efefef;
+}
+
+.switchList li:last-child{
+  border-bottom: 1px solid transparent;
+>>>>>>> 2780bd404788a863562981e078157944912acf52
 }
 
 
@@ -1469,6 +1527,7 @@ form span{
     color: #337ab7;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
+<<<<<<< HEAD
 
 
 
@@ -1545,3 +1604,5 @@ form span{
     font-size: 11px;
     margin-top: 4px;
 }
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52

@@ -6,6 +6,7 @@
               </a>
 
               <div class=" align-items-center right-part">
+<<<<<<< HEAD
                     @php
                         $isLoggedIn = Auth::guard('web')->check();
 
@@ -68,11 +69,43 @@
                             </div>
                         </div>
                     @endif
+=======
+                  {{-- <button type="button" class="Primary-btn" data-toggle="modal" data-target="#myModal">Register as a
+                        Partner</button>
+                    
+                    <button class="Primary-btn" data-toggle="modal" data-target="#carModal">Register your Car</button>
+                    
+                    <button class="Primary-btn" data-toggle="modal" data-target="#driverModal">Register as a
+                        Driver</button> --}}
+
+
+                  <div class="dropdown">
+                      <button class="Primary-btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Register as a Partner
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Register as
+                              a
+                              Manager</a>
+
+                          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#carModal">Register
+                              Your
+                              car</a>
+
+                          <a class="dropdown-item" href="#" data-toggle="modal"
+                              data-target="#driverModal">Register as
+                              a Driver</a>
+
+                      </div>
+                  </div>
+>>>>>>> 2780bd404788a863562981e078157944912acf52
 
                   <button class="Primary-btn" data-toggle="modal" data-target="#bookingModal"><i
                           class="fa-solid fa-phone mr-2"></i>Request a Call</button>
 
 
+<<<<<<< HEAD
                     @if ($isLoggedIn)
                         <div class="dropdown">
                             <button class="Secondary-btn dropdown-toggle"
@@ -120,6 +153,53 @@
       </div>
 
       {{-- <div class="gtranslate_wrapper" style="display:none;"></div> --}}
+=======
+                  @if (Auth::guard('web')->check())
+                      @php
+                          $user = Auth::guard('web')->user();
+
+                          switch ($user->user_type) {
+                              case 'user':
+                                  $dashboardUrl = route('user.dashboard');
+                                  break;
+
+                              case 'area_manager':
+                                  $dashboardUrl = route('manager.dashboard');
+                                  break;
+
+                              case 'driver':
+                                  $dashboardUrl = route('driver.dashboard');
+                                  break;
+
+                              case 'car_owner':
+                                  $dashboardUrl = route('car_owner.dashboard');
+                                  break;
+
+                              default:
+                                  $dashboardUrl = route('home.index');
+                                  break;
+                          }
+                      @endphp
+
+                      <a href="{{ $dashboardUrl }}">
+                          <i class="fa-solid fa-user"></i>
+                      </a>
+                  @else
+                      <button type="button" class="Secondary-btn" data-toggle="modal" data-target="#registerModal">
+                          Sign in / Register
+                      </button>
+                  @endif
+
+                  <select class="language">
+                      <option>English</option>
+                      <option>Hindi</option>
+                  </select>
+
+                  <button class="hambarger_btn" onclick='openNav()'><i class="fa-solid fa-bars-staggered"></i></button>
+              </div>
+          </div>
+      </div>
+>>>>>>> 2780bd404788a863562981e078157944912acf52
   </header>
 
 
@@ -225,6 +305,7 @@
                       </button>
 
                   </form>
+<<<<<<< HEAD
 
                     <div class="google-divider">
                         <span>OR</span>
@@ -239,6 +320,12 @@
                     </a>
               </div>
           </div>
+=======
+              </div>
+
+          </div>
+
+>>>>>>> 2780bd404788a863562981e078157944912acf52
       </div>
   </div>
 
@@ -311,6 +398,7 @@
                           Submit
                       </button>
                   </form>
+<<<<<<< HEAD
 
                   <div class="google-divider">
                         <span>OR</span>
@@ -323,6 +411,8 @@
                             height="20">
                         <span>Continue with Google</span>
                     </a>
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52
               </div>
           </div>
       </div>
@@ -399,6 +489,7 @@
                       </button>
 
                   </form>
+<<<<<<< HEAD
 
                     <div class="google-divider">
                         <span>OR</span>
@@ -411,6 +502,8 @@
                             height="20">
                         <span>Continue with Google</span>
                     </a>
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52
               </div>
 
           </div>
@@ -656,6 +749,7 @@
 
                               </button>
                           </form>
+<<<<<<< HEAD
 
                           <div class="text-center my-3">OR</div>
                           <a href="{{ route('google.redirect', ['type' => 'user']) }}"
@@ -667,6 +761,8 @@
                                     alt="Google">
                                 Continue with Google
                           </a>
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52
                       </div>
                       <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
                           aria-labelledby="pills-profile-tab">
@@ -818,7 +914,11 @@
 
 
                           {{-- ================= GOOGLE LOGIN ================= --}}
+<<<<<<< HEAD
                           <a href="{{ route('google.redirect', ['type' => 'login']) }}" class="google-login-btn">
+=======
+                          <a href="{{ route('google.redirect') }}" class="google-login-btn">
+>>>>>>> 2780bd404788a863562981e078157944912acf52
 
                               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                                   alt="Google" class="google-icon">
@@ -1185,6 +1285,7 @@
       </div>
   </div>
 
+<<<<<<< HEAD
 <script>
     window.gtranslateSettings = {
         default_language: "en",
@@ -1230,6 +1331,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52
 
   <script>
       function loadStates(form, country_id, selectedState = null) {
@@ -2731,6 +2834,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   </script>
 
+<<<<<<< HEAD
     @if (session('google_partner_registration_success'))
         <script>
             $(document).ready(function () {
@@ -2754,3 +2858,5 @@ document.addEventListener("DOMContentLoaded", function () {
         </script>
     @endif
 
+=======
+>>>>>>> 2780bd404788a863562981e078157944912acf52
