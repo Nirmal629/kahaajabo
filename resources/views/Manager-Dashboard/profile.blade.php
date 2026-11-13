@@ -215,9 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    // Profile image preview
-
-
 });
 </script>
 
@@ -266,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let button = this;
         button.disabled = true;
 
-        fetch("{{ route('manager.profile.image.upload') }}", {
+        fetch("{{ route('profile.image.upload') }}", {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -326,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let button = this;
             button.disabled = true;
 
-            fetch("{{ route('manager.profile.image.delete') }}", {
+            fetch("{{ route('profile.image.delete') }}", {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,

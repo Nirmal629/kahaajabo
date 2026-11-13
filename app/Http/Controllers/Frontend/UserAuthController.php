@@ -763,7 +763,4 @@ class UserAuthController extends Controller
             ->with('success', 'Logged out successfully.');
     }
 
-    public function profile(){
-        return view('User-Dashboard.profile');
-    }
 }

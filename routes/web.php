@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\VehicleRateController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\UserAuthController;
+use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\GoogleAuthController;
 use App\Http\Controllers\Frontend\ContactEnquiryController;
 use App\Http\Controllers\Frontend\AreaManagerAuthController;
@@ -59,13 +60,6 @@ Route::post('/login/resend-otp', [UserAuthController::class, 'resendLoginOtp'])-
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
-// Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
-
-//     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
-//     Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
-
-
-// });
 
 
 Route::middleware(['auth:web'])->group(function () {
@@ -74,6 +68,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/complete-profile', [ProfileCompletionController::class, 'show'])->name('profile.complete');
     Route::post('/complete-profile', [ProfileCompletionController::class, 'update'])->name('profile.complete.update');
     Route::post('/user-complete-profile', [ProfileCompletionController::class, 'userProfileupdate'])->name('user-profile.complete.update');
+
+    Route::post('/profile/image/upload', [AreaManagerAuthController::class, 'uploadProfileImage'])->name('profile.image.upload');
+    Route::delete('/profile/image/delete', [AreaManagerAuthController::class, 'deleteProfileImage'])->name('profile.image.delete');
+
 });
 
 
@@ -82,10 +80,10 @@ Route::middleware(['auth:web','user.type:user'])->prefix('user')->name('user.')-
     Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard');
 
     Route::middleware('profile.completed')->group(function () {
-        Route::get('/profile', [UserAuthController::class, 'profile'])->name('profile');
-        Route::put('/profile', [UserAuthController::class, 'update'])->name('profile.update');
-        Route::put('/password', [UserAuthController::class,'updatePassword'])->name('password.update');
-        Route::post('/profile/image', [UserAuthController::class,'updateImage'])->name('profile.image.update');
+        Route::get('/profile', [UserProfileController::class, 'profile'])->name('profile');
+        Route::put('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+        // Route::put('/password', [UserAuthController::class,'updatePassword'])->name('password.update');
+        // Route::post('/profile/image', [UserAuthController::class,'updateImage'])->name('profile.image.update');
     });
     
     
@@ -99,8 +97,8 @@ Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')
     Route::middleware('profile.completed')->group(function () {
 
         Route::get('/profile', [AreaManagerAuthController::class, 'profile'])->name('profile');
-        Route::post('/profile/image/upload', [AreaManagerAuthController::class, 'uploadProfileImage'])->name('profile.image.upload');
-        Route::delete('/profile/image/delete', [AreaManagerAuthController::class, 'deleteProfileImage'])->name('profile.image.delete');
+        // Route::post('/profile/image/upload', [AreaManagerAuthController::class, 'uploadProfileImage'])->name('profile.image.upload');
+        // Route::delete('/profile/image/delete', [AreaManagerAuthController::class, 'deleteProfileImage'])->name('profile.image.delete');
 
 
         Route::get('/direct-cost-estimate', [ManagerRideCostController::class, 'direct_cost_list'])->name('directride.cost.estimate');
