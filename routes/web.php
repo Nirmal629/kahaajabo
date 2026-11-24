@@ -30,6 +30,7 @@ use App\Http\Controllers\Frontend\DriverAuthController;
 use App\Http\Controllers\Frontend\CarOwnerAuthController;
 use App\Http\Controllers\Frontend\ProfileCompletionController;
 use App\Http\Controllers\Frontend\ManagerRideCostController;
+use App\Http\Controllers\Frontend\RideCostConfigurationController;
 
 use Illuminate\Support\Facades\DB;
 
@@ -72,6 +73,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/profile/image/upload', [AreaManagerAuthController::class, 'uploadProfileImage'])->name('profile.image.upload');
     Route::delete('/profile/image/delete', [AreaManagerAuthController::class, 'deleteProfileImage'])->name('profile.image.delete');
 
+    Route::put('/change-password', [UserProfileController::class, 'changePassword'])->name('password.update');
 });
 
 
@@ -81,7 +83,7 @@ Route::middleware(['auth:web','user.type:user'])->prefix('user')->name('user.')-
 
     Route::middleware('profile.completed')->group(function () {
         Route::get('/profile', [UserProfileController::class, 'profile'])->name('profile');
-        Route::put('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profile', [UserProfileController::class, 'updateProfile'])->name('profile.update');
         // Route::put('/password', [UserAuthController::class,'updatePassword'])->name('password.update');
         // Route::post('/profile/image', [UserAuthController::class,'updateImage'])->name('profile.image.update');
     });
@@ -97,9 +99,7 @@ Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')
     Route::middleware('profile.completed')->group(function () {
 
         Route::get('/profile', [AreaManagerAuthController::class, 'profile'])->name('profile');
-        // Route::post('/profile/image/upload', [AreaManagerAuthController::class, 'uploadProfileImage'])->name('profile.image.upload');
-        // Route::delete('/profile/image/delete', [AreaManagerAuthController::class, 'deleteProfileImage'])->name('profile.image.delete');
-
+        Route::put('/profile', [AreaManagerAuthController::class, 'updateProfile'])->name('profile.update');
 
         Route::get('/direct-cost-estimate', [ManagerRideCostController::class, 'direct_cost_list'])->name('directride.cost.estimate');
         Route::get('/create-direct-cost-estimate', [ManagerRideCostController::class, 'create_direct_cost_list'])->name('create.directride.cost.estimate');
@@ -107,7 +107,33 @@ Route::middleware(['auth:web','user.type:area_manager'])->prefix('area-manager')
         Route::post('/direct-cost-estimate/status/{id}', [ManagerRideCostController::class, 'updateStatus'])->name('directride.cost.status');
         Route::get('/direct-cost-estimate/view/{id}', [ManagerRideCostController::class, 'show'])->name('directride.cost.view');
         Route::get('/direct-cost-estimate/edit/{id}', [ManagerRideCostController::class, 'edit'])->name('directride.cost.edit');
+        Route::put('/direct-cost-estimate/{id}/update', [ManagerRideCostController::class, 'update'])->name('directride.cost.update');
         Route::delete('/direct-cost-estimate/delete/{id}', [ManagerRideCostController::class, 'destroy'])->name('directride.cost.delete');
+    
+    
+        Route::get('/ride-cost-configuration', [RideCostConfigurationController::class, 'index'])
+            ->name('ride.cost.index');
+
+        Route::get('/ride-cost-configuration/create', [RideCostConfigurationController::class, 'create'])
+            ->name('ride.cost.create');
+
+        Route::post('/ride-cost-configuration/store', [RideCostConfigurationController::class, 'store'])
+            ->name('ride.cost.store');
+
+        Route::get('/ride-cost-configuration/{id}/edit', [RideCostConfigurationController::class, 'edit'])
+            ->name('ride.cost.edit');
+
+        Route::put('/ride-cost-configuration/{id}/update', [RideCostConfigurationController::class, 'update'])
+            ->name('ride.cost.update');
+
+        Route::get('/ride-cost-configuration/{id}/view', [RideCostConfigurationController::class, 'show'])
+            ->name('ride.cost.show');
+
+        Route::delete('/ride-cost-configuration/{id}/delete', [RideCostConfigurationController::class, 'destroy'])
+            ->name('ride.cost.delete');
+
+        Route::post('/ride-cost/{id}/status', [RideCostConfigurationController::class, 'updateStatus_ridecost'])->name('ride.cost.status');
+    
     });
 
 });

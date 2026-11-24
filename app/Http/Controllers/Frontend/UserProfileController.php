@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class UserProfileController extends Controller
 {
     
     public function profile(){
+        $user = Auth::user();
         $countries = Country::where('country_code', 'IN')->orderBy('country_name')->get();
-        return view('User-Dashboard.profile', compact('countries'));
+        return view('User-Dashboard.profile', compact('countries', 'user'));
     }
 
     public function updateProfile(Request $request)
@@ -21,7 +26,11 @@ class UserProfileController extends Controller
             'first_name'       => 'required|string|max:255',
             'middle_name'      => 'nullable|string|max:255',
             'last_name'        => 'nullable|string|max:255',
-            'phone_number'     => 'required|digits:10',
+            'phone_number'     => [
+                'required',
+                'digits:10',
+                Rule::unique('users', 'phone_number')->ignore($user->id),
+            ],
             'secondary_mobile' => 'nullable|digits:10',
             'gender'           => 'nullable|in:male,female,other',
             'dob'              => 'nullable|date|before_or_equal:today',
@@ -64,5 +73,30 @@ class UserProfileController extends Controller
         $user->save();
 
         return back()->with('success', 'Profile updated successfully!');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'current_password' => 'required|current_password',
+            'password' => 'required|string|min:8|confirmed|different:current_password',
+        ], [
+            'current_password.current_password' =>
+                'Your current password is incorrect.',
+
+            'password.confirmed' =>
+                'New password and confirm password do not match.',
+
+            'password.different' =>
+                'New password must be different from your current password.',
+        ]);
+
+        $user = Auth::user();
+
+        $user->password = Hash::make($validated['password']);
+
+        $user->save();
+
+        return back()->with('success', 'Password changed successfully!');
     }
 }

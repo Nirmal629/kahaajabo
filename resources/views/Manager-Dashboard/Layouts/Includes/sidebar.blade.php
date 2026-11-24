@@ -27,6 +27,12 @@
                                                 Direct Cost Estimate
                                         </a>
                                 </li>
+
+                                <li class="sidebar__nav-item">
+                                        <a href="{{ route('manager.ride.cost.index') }}">
+                                                Ride Cost Configuration
+                                        </a>
+                                </li>
                         </ul>
                 </li>
 

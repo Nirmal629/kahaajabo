@@ -14,10 +14,11 @@ class ManagerRideCostController extends Controller
     public function direct_cost_list(){
         $user_type = Auth::guard('web')->user();
 
-        $cost_estimates = DirectCostEstimate::where(
-            'area_managerId',
-            $user_type->id
-        )->latest()->get();
+        $cost_estimates = DirectCostEstimate::with('vehicleType')
+        ->where('area_managerId', $user_type->id)
+        ->latest()
+        ->get();
+
 
         return view('Manager-Dashboard.CarCost.directCarCost', compact('cost_estimates'));
     }
@@ -79,6 +80,63 @@ class ManagerRideCostController extends Controller
         }
     }
 
+    public function edit(Request $request, $id){
+
+        $vehicle_types = VehicleType::where('status', 1)->get();
+        $estimate = DirectCostEstimate::where('id', $id)
+            ->where('area_managerId', Auth::guard('web')->id())
+            ->firstOrFail();
+
+        return view('Manager-Dashboard.CarCost.create_directCarCost', compact('vehicle_types', 'estimate'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'pickup_location' => 'required|string|max:255',
+            'pickup_latitude' => 'nullable|numeric|between:-90,90',
+            'pickup_longitude' => 'nullable|numeric|between:-180,180',
+
+            'dropoff_location' => 'required|string|max:255',
+            'dropoff_latitude' => 'nullable|numeric|between:-90,90',
+            'dropoff_longitude' => 'nullable|numeric|between:-180,180',
+
+            'estimated_distance' => 'required|numeric|min:0',
+            'vehicle_category' => 'required|exists:vehicle_types,id',
+            'total_estimated_fare' => 'required|numeric|min:0',
+        ]);
+
+        try {
+            $estimate = DirectCostEstimate::where('id', $id)
+                ->where('area_managerId', Auth::guard('web')->id())
+                ->firstOrFail();
+
+            $estimate->pickup_location = $validated['pickup_location'];
+            $estimate->pickup_latitude = $validated['pickup_latitude'] ?? null;
+            $estimate->pickup_longitude = $validated['pickup_longitude'] ?? null;
+            $estimate->dropoff_location = $validated['dropoff_location'];
+            $estimate->dropoff_latitude = $validated['dropoff_latitude'] ?? null;
+            $estimate->dropoff_longitude = $validated['dropoff_longitude'] ?? null;
+            $estimate->estimated_distance = $validated['estimated_distance'];
+            $estimate->vehicle_category = $validated['vehicle_category'];
+            $estimate->total_estimated_fare = $validated['total_estimated_fare'];
+
+            // Keep the existing status unchanged
+            $estimate->save();
+
+            return redirect()
+                ->route('manager.directride.cost.estimate')
+                ->with('success', 'Direct cost estimate updated successfully!');
+
+        } catch (\Exception $e) {
+            Log::error('Direct Cost Estimate Update Error: ' . $e->getMessage());
+
+            return back()
+                ->withInput()
+                ->with('error', 'Something went wrong while updating the direct cost estimate.');
+        }
+    }
+
     public function updateStatus(Request $request, $id)
     {
         try {
@@ -135,5 +193,5 @@ class ManagerRideCostController extends Controller
                 ->route('manager.directride.cost.estimate')
                 ->with('error', 'Unable to delete direct cost estimate.');
         }
-    }
+    } 
 }

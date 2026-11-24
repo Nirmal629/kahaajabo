@@ -1,7 +1,23 @@
 @extends('Frontend.Includes.main')
 @section('main_content')
 
+<style>
+.box {
+    width: 100%;
+}
 
+.box h6 {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.box input {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    font-size: 13px;
+}
+</style>
 <!-----banner------>
 <section class="banner">
     <div class="swiper mySwiper">
@@ -33,49 +49,56 @@
 
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
-                        aria-controls="pills-home" aria-selected="true">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill"
+                        href="#pills-home" role="tab">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                value="option1" checked>
+                            <input class="form-check-input" type="radio"
+                                name="exampleRadios" id="exampleRadios1"
+                                value="one_way" checked>
                             <label class="form-check-label" for="exampleRadios1">
-                             One way
+                                One Way
                             </label>
                         </div>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                        aria-controls="pills-profile" aria-selected="false">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill"
+                        href="#pills-profile" role="tab">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                value="option2" checked>
+                            <input class="form-check-input" type="radio"
+                                name="exampleRadios" id="exampleRadios2"
+                                value="round_trip">
                             <label class="form-check-label" for="exampleRadios2">
-                               Round Trip
+                                Round Trip
                             </label>
                         </div>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                        aria-controls="pills-contact" aria-selected="false">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill"
+                        href="#pills-contact" role="tab">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                                value="option3">
+                            <input class="form-check-input" type="radio"
+                                name="exampleRadios" id="exampleRadios3"
+                                value="road_trip">
                             <label class="form-check-label" for="exampleRadios3">
                                 Road Trip
                             </label>
                         </div>
                     </a>
                 </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="pills-local-tab" data-toggle="pill" href="#pills-local" role="tab"
-                        aria-controls="pills-local" aria-selected="false">
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-local-tab" data-toggle="pill"
+                        href="#pills-local" role="tab">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4"
-                                value="option4">
+                            <input class="form-check-input" type="radio"
+                                name="exampleRadios" id="exampleRadios4"
+                                value="local_transfer">
                             <label class="form-check-label" for="exampleRadios4">
-                                Local transfer
+                                Local Transfer
                             </label>
                         </div>
                     </a>
@@ -84,29 +107,38 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div class="row">
-                        <div class="col-md-3 col-12">
+                        <div class="col-md col-12">
                             <div class="box">
                                 <h6>Pick Up Location</h6>
-                                <input type="text" placeholder="City or Airport">
+                                <input type="text" class="form-control" placeholder="City or Airport">
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-12">
+                        <div class="col-md col-12">
                             <div class="box">
                                 <h6>Drop Location</h6>
-                                <input type="text" placeholder="City or Airport">
+                                <input type="text" class="form-control" placeholder="City or Airport">
                             </div>
                         </div>
-                        <div class="col-md-3 col-12">
+
+                        <div class="col-md col-12">
                             <div class="box">
                                 <h6>Pickup Date</h6>
-                                <input type="date" placeholder="">
+                                <input type="date" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-3 col-12">
+
+                        <div class="col-md col-12">
                             <div class="box">
-                                <h6>Mobile No</h6>
-                                <input type="text" placeholder="9100000766">
+                                <h6>Pickup Time</h6>
+                                <input type="time" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md col-12">
+                            <div class="box">
+                                <h6>Vehicle Category</h6>
+                                <input type="text" class="form-control" placeholder="Select Vehicle">
                             </div>
                         </div>
                     </div>

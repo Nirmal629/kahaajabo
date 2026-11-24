@@ -2,6 +2,11 @@
 
 @section('main-content')
 
+<?php
+  $passwordTabActive = $errors->has('current_password') || $errors->has('password');
+?>
+
+
 <div class="container-fluid">
     <div class="page_Title">
         <h2 class="ProfilepageTitle mt-3">Profile Settings</h2>
@@ -56,159 +61,347 @@
                 </div>
             </div>
             <div class="col-lg-8 col-md-8 col-12">
-                <div class="user_form">
-                    <form method="POST" id="mandatoryForm" action="{{ route('user.profile.update') }}">
-                        @csrf
-                        <div class="mb-3">
-                            <h4><i class="fa-solid fa-circle-user"></i> Account Details</h4>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="userForminput1">Name <span>*</span></label>
-                                    <input type="text" class="form-control" name="first_name" value="{{ Auth::user()->first_name }}" placeholder="First Name">
-                                </div>
-                                <div class="col">
-                                    <label for="userForminput1"></label>
-                                    <input type="text" class="form-control" name="middle_name" value="{{ Auth::user()->middle_name }}" placeholder="Middle Name">
-                                </div>
-                                <div class="col">
-                                    <label for="userForminput1"></label>
-                                    <input type="text" class="form-control" name="last_name" value="{{ Auth::user()->last_name }}" placeholder="Last Name">
-                                </div>
-                                
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="userForminput2">Email <span>*</span></label>
-                                    <input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}" placeholder="Email" readonly>
-                                </div>
-                                <div class="col">
-                                    <label for="userForminput3">Primary Mobile No<span>*</span></label>
-                                    <input type="text" class="form-control" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="phone_number" placeholder="Primary Mobile No">
-                                </div>
-                                <div class="col">
-                                    <label for="userForminput3">Secondary Mobile No</label>
-                                    <input type="text" class="form-control" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="secondary_mobile" placeholder="Secondary Mobile No">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <label class="d-block">Gender</label>
+                <div class="user_form profile-tabs-wrapper">
 
-                                    <div class="d-flex align-items-center mt-2">
-                                        <div class="form-check mr-4">
-                                            <input class="form-check-input" type="radio"
-                                                name="gender" id="male" value="male">
-                                            <label class="form-check-label" for="male">Male</label>
+                     <!-- TAB NAVIGATION -->
+                    <ul class="nav nav-tabs profile-nav-tabs" id="profileTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link {{ !$passwordTabActive ? 'active' : '' }}"
+                                id="profile-tab"
+                                data-toggle="tab"
+                                href="#profileDetails"
+                                role="tab">
+
+                                <i class="fa-solid fa-circle-user"></i>
+                                Profile Details
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ $passwordTabActive ? 'active' : '' }}"
+                                id="password-tab"
+                                data-toggle="tab"
+                                href="#changePassword"
+                                role="tab">
+
+                                <i class="fa-solid fa-lock"></i>
+                                Change Password
+
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content profile-tab-content">
+
+                        <!-- ================================= -->
+                        <!-- PROFILE DETAILS TAB -->
+                        <!-- ================================= -->
+
+                        <div class="tab-pane fade {{ !$passwordTabActive ? 'show active' : '' }}"
+                            id="profileDetails"
+                            role="tabpanel">
+
+                            <form method="POST" id="mandatoryForm" action="{{ route('user.profile.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-3">
+                                    <h4><i class="fa-solid fa-circle-user"></i> Account Details</h4>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="userForminput1">Name <span>*</span></label>
+                                            <input type="text" class="form-control" name="first_name" value="{{ Auth::user()->first_name }}" placeholder="First Name">
+                                        </div>
+                                        <div class="col">
+                                            <label for="userForminput1"></label>
+                                            <input type="text" class="form-control" name="middle_name" value="{{ Auth::user()->middle_name }}" placeholder="Middle Name">
+                                        </div>
+                                        <div class="col">
+                                            <label for="userForminput1"></label>
+                                            <input type="text" class="form-control" name="last_name" value="{{ Auth::user()->last_name }}" placeholder="Last Name">
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="userForminput2">Email <span>*</span></label>
+                                            <input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}" placeholder="Email" readonly>
+                                        </div>
+                                        <div class="col">
+                                            <label for="userForminput3">Primary Mobile No<span>*</span></label>
+                                            <input type="text" class="form-control" maxlength="10" value="{{ Auth::user()->phone_number }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="phone_number" placeholder="Primary Mobile No">
+                                        </div>
+                                        <div class="col">
+                                            <label for="userForminput3">Secondary Mobile No</label>
+                                            <input type="text" class="form-control" maxlength="10" value="{{ Auth::user()->secondary_mobile }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="secondary_mobile" placeholder="Secondary Mobile No">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="d-block">Gender</label>
+
+                                            <div class="d-flex align-items-center mt-2">
+
+                                                <div class="form-check mr-4">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="gender" id="male" value="male"
+                                                        {{ old('gender', $user->gender) == 'male' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="male">Male</label>
+                                                </div>
+
+                                                <div class="form-check mr-4">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="gender" id="female" value="female"
+                                                        {{ old('gender', $user->gender) == 'female' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="female">Female</label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="gender" id="other" value="other"
+                                                        {{ old('gender', $user->gender) == 'other' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="other">Other</label>
+                                                </div>
+
+                                            </div>
                                         </div>
 
-                                        <div class="form-check mr-4">
-                                            <input class="form-check-input" type="radio"
-                                                name="gender" id="female" value="female">
-                                            <label class="form-check-label" for="female">Female</label>
-                                        </div>
+                                        <div class="col">
+                                            <label for="dob">Date Of Birth</label>
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio"
-                                                name="gender" id="other" value="other">
-                                            <label class="form-check-label" for="other">Other</label>
+                                            <input type="date" name="dob" id="dob"
+                                                class="form-control"
+                                                value="{{ old('dob', $user->dob ? \Carbon\Carbon::parse($user->dob)->format('Y-m-d') : '') }}"
+                                                max="{{ date('Y-m-d') }}">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <h4><i class="fa-solid fa-sliders"></i> Preferences & Settings</h4>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="userForminput7">Skill Level</label>
+                                            <input type="text" class="form-control" name="skill_level" value="{{ old('skill_level', Auth::user()->skill_level) }}" placeholder="">
+                                        </div>
+                                        <div class="col">
+                                            <label for="userForminput8">Currency</label>
+                                            <input type="text" class="form-control" placeholder="" value="{{ old('currency', Auth::user()->currency) }}" name="currency">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="userForminput9">Time Zone</label>
+                                            <input type="text" class="form-control" placeholder="" value="{{ old('timezone', Auth::user()->timezone) }}" name="timezone">
+                                        </div>
+                                    </div>
 
-                                <div class="col">
-                                    <label for="dob">Date Of Birth</label>
-                                    <input type="date" name="dob" id="dob"
-                                        class="form-control"
-                                        max="{{ date('Y-m-d') }}">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <h4><i class="fa-solid fa-sliders"></i> Preferences & Settings</h4>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="userForminput7">Skill Level</label>
-                                    <input type="text" class="form-control" name="skill_level" placeholder="">
-                                </div>
-                                <div class="col">
-                                    <label for="userForminput8">Currency</label>
-                                    <input type="text" class="form-control" placeholder="" name="currency">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="userForminput9">Time Zone</label>
-                                    <input type="text" class="form-control" placeholder="" name="timezone">
-                                </div>
-                            </div>
+                                <div class="mb-3">
+                                    <h4><i class="fa-solid fa-map-location-dot"></i> Location Information</h4>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="userForminput9">Country<span>*</span></label>
+                                            <select name="country_id" class="form-control location-country" required>
+                                                <option value="">
+                                                    Choose Country
+                                                </option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country->id }}" {{ Auth::user()->country_id == $country->id ? 'selected' : '' }}>
+                                                        {{ $country->country_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="userForminput8">State<span>*</span></label>
+                                            <select name="state_id" class="form-control location-state" disabled required>
+                                                <option value="">
+                                                    Choose State
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="userForminput8">District<span>*</span></label>
+                                            <select name="district_id" class="form-control location-district" disabled required>
+                                                <option value="">
+                                                    Choose District
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
 
-                        </div>
-                        <div class="mb-3">
-                            <h4><i class="fa-solid fa-map-location-dot"></i> Location Information</h4>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="userForminput9">Country<span>*</span></label>
-                                    <select name="country_id" class="form-control location-country" required>
-                                        <option value="">
-                                            Choose Country
-                                        </option>
-                                        @foreach($countries as $country)
-                                            <option value="{{ $country->id }}" {{ Auth::user()->country_id == $country->id ? 'selected' : '' }}>
-                                                {{ $country->country_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="userForminput8">State<span>*</span></label>
-                                    <select name="state_id" class="form-control location-state" disabled required>
-                                        <option value="">
-                                            Choose State
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <label for="userForminput8">District<span>*</span></label>
-                                    <select name="district_id" class="form-control location-district" disabled required>
-                                        <option value="">
-                                            Choose District
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            
+                                <div>
+                                    <h4> <i class="fa-solid fa-shield-halved"></i> permissions & Privacy</h4>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Email Notification Permission <span>*</span></label>
 
-                        </div>
-                        <div>
-                            <h4> <i class="fa-solid fa-shield-halved"></i> permissions & Privacy</h4>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label>Email Notification Permission <span>*</span></label>
+                                                <div class="toggle-group" data-input="email_notification">
+                                                    <button type="button"
+                                                        class="toggle-btn {{ old('email_notification', $user->email_notification ?? 'yes') == 'yes' ? 'active' : '' }}"
+                                                        data-value="yes">Yes</button>
 
-                                        <div class="toggle-group">
-                                            <button class="toggle-btn active">Yes</button>
-                                            <button class="toggle-btn">No</button>
+                                                    <button type="button"
+                                                        class="toggle-btn {{ old('email_notification', $user->email_notification ?? 'yes') == 'no' ? 'active' : '' }}"
+                                                        data-value="no">No</button>
+                                                </div>
+
+                                                <input type="hidden" name="email_notification"
+                                                    value="{{ old('email_notification', $user->email_notification ?? 'yes') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Call, Text & Chat Consent <span>*</span></label>
+
+                                                <div class="toggle-group" data-input="call_text_chat_consent">
+                                                    <button type="button"
+                                                        class="toggle-btn {{ old('call_text_chat_consent', $user->call_text_chat_consent ?? 'yes') == 'yes' ? 'active' : '' }}"
+                                                        data-value="yes">Yes</button>
+
+                                                    <button type="button"
+                                                        class="toggle-btn {{ old('call_text_chat_consent', $user->call_text_chat_consent ?? 'yes') == 'no' ? 'active' : '' }}"
+                                                        data-value="no">No</button>
+                                                </div>
+
+                                                <input type="hidden" name="call_text_chat_consent"
+                                                    value="{{ old('call_text_chat_consent', $user->call_text_chat_consent ?? 'yes') }}">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label> Call, Text & Chat Consent <span>*</span></label>
+                                <button type="submit" class="Primary-btn ml-auto d-table">Save Profile Details</button>
+                            </form>
+                        </div>
 
-                                        <div class="toggle-group">
-                                            <button class="toggle-btn active">Yes</button>
-                                            <button class="toggle-btn">No</button>
+                        <!-- ================================= -->
+                        <!-- CHANGE PASSWORD TAB -->
+                        <!-- ================================= -->
+
+                        <div class="tab-pane fade {{ $passwordTabActive ? 'show active' : '' }}"
+                            id="changePassword"
+                            role="tabpanel">
+
+                            <div class="password-content">
+
+                                <h4>
+                                    <i class="fa-solid fa-lock"></i>
+                                    Change Password
+                                </h4>
+
+                                <p class="password-description">
+                                    Update your password to keep your account secure.
+                                </p>
+
+
+                                <!-- SEPARATE PASSWORD FORM -->
+                                <form method="POST" action="{{ route('password.update') }}" id="changePasswordForm">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+
+                                            <label for="current_password">
+                                                Current Password <span>*</span>
+                                            </label>
+
+                                            <div class="password-input-wrapper">
+
+                                                <input type="password"
+                                                    name="current_password"
+                                                    id="current_password"
+                                                    class="form-control"
+                                                    placeholder="Enter Current Password"
+                                                    required>
+
+                                                <i class="fa-regular fa-eye password-eye"
+                                                    data-target="current_password"></i>
+
+                                            </div>
+
+                                            @error('current_password')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+
                                         </div>
+
+
+                                        <!-- NEW PASSWORD -->
+                                        <div class="col-md-6 mb-3">
+
+                                            <label for="new_password">
+                                                New Password <span>*</span>
+                                            </label>
+
+                                            <div class="password-input-wrapper">
+
+                                                <input type="password"
+                                                    name="password"
+                                                    id="new_password"
+                                                    class="form-control"
+                                                    placeholder="Enter New Password"
+                                                    required>
+
+                                                <i class="fa-regular fa-eye password-eye"
+                                                    data-target="new_password"></i>
+
+                                            </div>
+
+                                            @error('password')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+
+                                        </div>
+
+
+                                        <!-- CONFIRM PASSWORD -->
+                                        <div class="col-md-6 mb-3">
+
+                                            <label for="password_confirmation">
+                                                Confirm New Password <span>*</span>
+                                            </label>
+
+                                            <div class="password-input-wrapper">
+
+                                                <input type="password"
+                                                    name="password_confirmation"
+                                                    id="password_confirmation"
+                                                    class="form-control"
+                                                    placeholder="Confirm New Password"
+                                                    required>
+
+                                                <i class="fa-regular fa-eye password-eye"
+                                                    data-target="password_confirmation"></i>
+
+                                            </div>
+
+                                        </div>
+
                                     </div>
-                                </div>
+
+
+                                    <!-- UPDATE PASSWORD BUTTON -->
+                                    <button type="submit"
+                                        class="Primary-btn ml-auto d-table">
+
+                                        <i class="fa-solid fa-key"></i>
+                                        Update Password
+
+                                    </button>
+
+                                </form>
 
                             </div>
+
                         </div>
-                        <button type="submit" class="Primary-btn ml-auto d-table">Save Profile Details</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -217,28 +410,25 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Yes / No notification toggles
-    document.querySelectorAll('.toggle-btn').forEach(function (button) {
+    $(document).ready(function () {
+        $('.toggle-group .toggle-btn').on('click', function () {
 
-        button.addEventListener('click', function () {
+            let button = $(this);
+            let group = button.closest('.toggle-group');
 
-            const group = this.dataset.group;
-            const value = this.dataset.value;
+            let value = button.data('value');
+            let inputName = group.data('input');
 
-            document.querySelectorAll(
-                '.toggle-btn[data-group="' + group + '"]'
-            ).forEach(function (item) {
-                item.classList.remove('active');
-            });
+            group.find('.toggle-btn').removeClass('active');
+            button.addClass('active');
 
-            this.classList.add('active');
+            $('input[name="' + inputName + '"]').val(value);
 
-            document.getElementById(group).value = value;
         });
-
     });
-
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
     // Show / hide password
     document.querySelectorAll('.password-eye').forEach(function (icon) {
 

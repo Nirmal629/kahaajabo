@@ -7,4 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class DirectCostEstimate extends Model
 {
     protected $guarded = [];
+
+
+    public function vehicleType()
+    {
+        return $this->belongsTo(VehicleType::class, 'vehicle_category', 'id');
+    }
 }

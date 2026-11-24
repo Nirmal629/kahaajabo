@@ -482,7 +482,6 @@
     .success-email-box {
         padding: 11px;
     }
-<<<<<<< HEAD
 }
 
 
@@ -551,7 +550,137 @@
 
 
 
+/* Main Tab Navigation */
 
-=======
-}
->>>>>>> 2780bd404788a863562981e078157944912acf52
+    .profile-tabs-wrapper {
+        background: #fff;
+    }
+
+    .profile-nav-tabs {
+        border-bottom: 1px solid #e5e7eb;
+        margin-bottom: 25px;
+        gap: 10px;
+    }
+
+    .profile-nav-tabs .nav-link {
+        color: #555;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 13px 20px;
+        border: none;
+        border-radius: 7px 7px 0 0;
+        transition: all 0.3s ease;
+    }
+
+    .profile-nav-tabs .nav-link i {
+        color: #1685ed;
+        margin-right: 7px;
+    }
+
+    .profile-nav-tabs .nav-link:hover {
+        color: #061d49;
+        background: #f7f9fc;
+    }
+
+    .profile-nav-tabs .nav-link.active {
+        color: #061d49;
+        background: #fff;
+        border: none;
+        border-bottom: 3px solid #1685ed;
+    }
+
+    .profile-tab-content {
+        padding: 5px 0;
+    }
+
+
+    /* Password Section */
+
+    .password-content {
+        padding: 10px 0;
+    }
+
+    .password-content h4 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #292d32;
+        margin-bottom: 8px;
+    }
+
+    .password-content h4 i {
+        color: #1685ed;
+        margin-right: 5px;
+    }
+
+    .password-description {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .password-content label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #292d32;
+        margin-bottom: 8px;
+    }
+
+    .password-content label span {
+        color: red;
+    }
+
+    .password-content .form-control {
+        height: 45px;
+        border: 1px solid #dce1e7;
+        border-radius: 6px;
+        box-shadow: none;
+        padding-right: 42px;
+    }
+
+    .password-content .form-control:focus {
+        border-color: #1685ed;
+        box-shadow: 0 0 0 2px rgba(22, 133, 237, 0.08);
+    }
+
+    .password-input-wrapper {
+        position: relative;
+    }
+
+    .password-eye {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #777;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .password-eye:hover {
+        color: #1685ed;
+    }
+
+
+
+    /* Mobile Responsive */
+
+    @media(max-width: 767px) {
+
+        .profile-nav-tabs {
+            gap: 3px;
+        }
+
+        .profile-nav-tabs .nav-link {
+            padding: 11px 10px;
+            font-size: 13px;
+        }
+
+        .profile-nav-tabs .nav-link i {
+            margin-right: 4px;
+        }
+
+        .password-content {
+            padding: 5px 0;
+        }
+
+    }

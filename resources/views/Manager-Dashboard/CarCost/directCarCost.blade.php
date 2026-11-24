@@ -69,7 +69,7 @@
                             <td>{{ $estimate->dropoff_latitude ?? '-' }}</td>
                             <td>{{ $estimate->dropoff_longitude ?? '-' }}</td>
                             <td>{{ $estimate->estimated_distance ?? '-' }} KM</td>
-                            <td>{{ $estimate->vehicle_category }}</td>
+                            <td> {{ $estimate->vehicleType->vehicle_type ?? 'N/A' }}</td>
 
                             <td>
                                 <i class="fa-solid fa-indian-rupee-sign"></i>
@@ -95,10 +95,10 @@
 
                             <td class="text-center">
 
-                                <button class="action_btn view_btn" type="button"
+                                {{-- <button class="action_btn view_btn" type="button"
                                     onclick="window.location.href='{{ route('manager.directride.cost.view', $estimate->id) }}'">
                                     <i class="fa-solid fa-eye"></i>
-                                </button>
+                                </button> --}}
 
                                 <button class="action_btn edit_btn" type="button"
                                     onclick="window.location.href='{{ route('manager.directride.cost.edit', $estimate->id) }}'">
